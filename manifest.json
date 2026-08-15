@@ -1,0 +1,15 @@
+{
+  "name": "Rovaniemi Essentials Map",
+  "short_name": "Rovaniemi Map",
+  "description": "Essential locations for international students and newcomers in Rovaniemi, Finland — government offices, health, shopping, transport and more.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#154360",
+  "theme_color": "#154360",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

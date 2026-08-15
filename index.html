@@ -1,0 +1,2990 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- PWA: installable app metadata -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#154360" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Rovaniemi Map" />
+    <link rel="apple-touch-icon" href="icons/icon-180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png" />
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_22212881d0e071631211648bf938c64f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.66.2/L.Control.Locate.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.66.2/L.Control.Locate.min.css"/>
+</head>
+<body>
+    
+    
+    <div style="
+        position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+        z-index: 9999;
+        background: linear-gradient(135deg, #154360, #2e86c1);
+        color: white;
+        padding: 10px 26px;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        text-align: center;">
+        <div style="font-size: 19px; font-weight: 700; letter-spacing: 0.3px;
+                    display: flex; align-items: center; justify-content: center; gap: 8px;">
+            ❄️ Rovaniemi Essentials Map
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAGj0lEQVR4nO2Y3W8c1RnGf+fM7Mx+2bNrG9sxjqlNQ5oqCVRGNEWJUFRRiSRSuUCtKnEDQmqvuEX8Cb3sXS96W1VVPy6QKC0RFVEbEgIqCThErkmT4IK/Ynu9Xu/u7Myc04szm914Z9d2Qhup4pHGlufjPc/78bzvORZaa8HXuHcIrfXwgybRC0Jr/e8HTaIXhNZaP2gSvWAD90RQKQWAlLJ5BxXpO8YEIIWA+Hnn+7vDvUVQaxBG/EEQUFcQKkXY8FFhaAxbFrbjYNk2aTSukzK027797xEE/CBgfatGWK2gbn2Gs/A5bmkVu1oGrYnSWRreAP7QGGLqINIr0p9Ok8+k97TOngkqpVjZKFNfvU324jvkP75AprQCG2tQr0EYmKKxLEinIV+gURiiMvVttp45jRjdz3CxgJOyv3qCjUaDpdU1Uh+9x8C7b+B8PgfldRAS7JQh1Uyf1qAURKEhncsTjU6wcexZNp/+AYOj+8hnM18dwbrvs7C4ROHcGxTP/h7KG4aMFetMx1fHCgKEQCuFiCJwXapPnWTp9IsMTEzi5XP3TzAIAr5YWqb459/ivfUbCBpgOy1iSZBt0UQDMdGggYhC6k+dZOGFn/LQ5BT5dPe63LEQtIpY3tyi7+wf8P74K7SbRaQck75eqFVMepsQgLQR6SxYLunzf2EkDFl55XWc0RGcVCrZz50Ilmo++tN/MPj3N80CUvYmpwEVQLEfxkZb1+gweDmIGibq6SzZmUtkL55ldbPSNRM9I6iUYnN1haELb8PyArguqCiOiEnZXbUnZEygAWd+Bo8dbUUx1w+Lt+AXr0MAuBnwawxeeJv5A0ep9T1OJkHZiQS11ggh2Kj7OLOfkJm5ZCZCu5dRaMhK+860QCtTezIPH5yHT2daDk2fgMNHzbuhMrbsFPLmHP1XLlAanyQzNNDRyBMJmseamt8gM3sFsbGOljaiSVBrIxLbhijaVmvCpHluJo6uMiS9Ihw4cLdwhIAwIDN7mfKJU6jBYkfNJdegEDRCBWsrZNaXQanYbpzWegWmn4YXX4WDTyTlwJBPOeA45reUsZgF28e/U17HXV2k6jc6xmAXkWgCIWH+Ou7CzZbxZnzrZTg6Dad/BI8eioWhOmdse5exHcj1mT+atrQGaSFLq6TmZqhHUXy75UAHweajSArUwjxiZQkt2zY97RykNMLoBt323u0v4aPzoIWp02a1SAnVCtyaI0gQcrKKtbFDpQxbm5DNQ7Sttdzxslefjxu0lHD1A7h8Duws2NLUJhgH/SqU1rZ5H/vWw7qZr7bdfVrsGrHHdjYh4ibNpJzEL7uIBIQGMTgMhcFWq7gfCGmIbIdSkM7Cvv3IhGx0EBTxz5RSiIcniUbGESqKG3PCwlKaXYxl3311bEoT5rYQCKWgz0NNHcKRnQt0nSSuAMYmqA3tIz97pdtrpsDXFkEHcfHH/S1bgJTb/bs7vBVB3sOfeJR+x4l579CotdZIKZH5PuqjE+TtFFpphBRtLSKeBt86Amd+bAg2+6TScO0qrK60pkw3KE1jeJzIG8S12xzsRbDpgec6rD5+jOjDd7FuzoJ0W2lOOcbQyTPm2o6fvwZ/+xNIxxDfXl9CmCnkFahMn6C/WGzdb0P3zYLWZJwUcv8kG8e+z8D89XgdDek+eP+vZpvf8FuLa0AKCCO4ca1NFAldQEpo+FSPfJf6oe8w1OWs0p1g7Mlgfz8LTz5D/vJ7OFcuovuLiIwHF8/BubeSxSAkZLzuNWhZUKuii0PcPn6KwvAIVpdS2HHD6toWxUemWHz+ZR4ul7C+uAFOGnIFyBW7f9is0e2II0feY/n5l3COPInnOs2W3oHdnUmUYrmyhf/xh4z97pdYn11Fu2ljcLdNXAi0EAi/DoPDLP/wJeonnmN8wENaPRK561OdVixvbOLPzjD85q9xP7lkGnjPSROLQ4j4hBcRPfIYK6d+Qjh9nH0DRSy7dxL3eC7WbNR81m9cJ3f5PAPvv4M1N2OEIWRcj6IlJq0NwTBEjYxT/t6zlJ44TvbQER7K58zxYQfsiWCzTvwwolSrUZ27Rm7+Otl/XSN1659Y5TXkVgW0QmeyRH0FgrFvUP/mYSpjk9gHD1MoFMjZVoK4uhMMd36tBUU8H1VEHYtKrUqltI7cqmBXN5H1KmiNdtOE2TxRJk/GK9DX55EW6n/0z6MuiDBR1rETkmRl7gVCa33yfokRhkYse332/wChtU7YpH2NXeM/YNPLFMVjTuIAAAAASUVORK5CYII="
+                 style="height: 24px; width: 24px; border-radius: 6px; vertical-align: middle;" />
+        </div>
+        <div style="font-size: 12px; font-weight: 400; opacity: 0.9; margin-top: 2px;">
+            FOR INTERNATIONAL STUDENTS LAPIN AMK 2026-2027
+        </div>
+    </div>
+    
+    
+    <div style="
+        position: fixed; bottom: 24px; left: 16px; z-index: 9999;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(4px);
+        padding: 14px 16px;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        max-height: 340px; overflow-y: auto; width: 235px;">
+        <div style="font-size:13px; font-weight:700; color:#154360; margin-bottom:8px;
+                     border-bottom: 2px solid #eee; padding-bottom: 6px;">
+            📍 Map Legend
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#154360; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-university" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Government & legal registration</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">6</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#00b894; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-graduation-cap" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Education & family</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">7</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#d63031; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-h-square" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Health & dental</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">4</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#e84393; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-medkit" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Pharmacy</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#6c5ce7; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-shopping-cart" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Supermarkets</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">6</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#4a235a; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-shopping-bag" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Shopping Centres</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">2</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#5f9ea0; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-plug" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Electronics</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#e67e22; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-cutlery" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Fast-Food</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#2d3436; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-money" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Local Banking</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#636e72; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-bus" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Transport</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#c9a66b; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-recycle" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Second Hand Shops</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">2</span>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin:4px 0;">
+            <span style="background:#1e8449; width:16px; height:16px; border-radius:50%;
+                         display:inline-flex; align-items:center; justify-content:center;
+                         margin-right:8px; flex-shrink:0; box-shadow:0 1px 3px rgba(0,0,0,0.4);">
+                <i class="fa fa-tree" style="color:white; font-size:9px;"></i>
+            </span>
+            <span style="font-size:12.5px; color:#222;">Parks & outdoor/leisure</span>
+            <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">5</span>
+        </div>
+        
+    </div>
+    
+    
+    <div style="
+        position: fixed; bottom: 8px; right: 12px; z-index: 9999;
+        background: rgba(21,67,96,0.85);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.2px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+        Map by <b>Subash Jayawardhana</b>
+    </div>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .leaflet-popup-content-wrapper { border-radius: 10px; }
+        .leaflet-control-layers { border-radius: 10px !important; }
+    </style>
+    
+    
+            <div class="folium-map" id="map_22212881d0e071631211648bf938c64f" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_22212881d0e071631211648bf938c64f = L.map(
+                "map_22212881d0e071631211648bf938c64f",
+                {
+                    center: [66.5039, 25.7294],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_22212881d0e071631211648bf938c64f);
+
+            
+
+        
+    
+            var tile_layer_26377dd47b8bbd8a644327e631f38fdd = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_26377dd47b8bbd8a644327e631f38fdd.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var tile_layer_d3aa36777cdd55bac938951eeafdecb3 = L.tileLayer(
+                "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Map data: \u0026copy; OpenStreetMap contributors, SRTM | Map style: \u0026copy; OpenTopoMap (CC-BY-SA)",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_d3aa36777cdd55bac938951eeafdecb3.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_d3dd933ee2f2bd357729e045d14934bd = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_b59ab5f43cf15154f182fded3696e1da = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_7559c4ce99400527c002a7df1f321196 = L.marker(
+                [66.4968961871329, 25.727474766459025],
+                {
+}
+            ).addTo(marker_cluster_b59ab5f43cf15154f182fded3696e1da);
+        
+    
+            var icon_9ffe2c0daa4450b0a2accf27de04a9aa = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_28e2e44533bceccb77f7bacee2c930dc = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c0ad40d456f61b57102188bcb3d4b3be = $(`<div id="html_c0ad40d456f61b57102188bcb3d4b3be" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #154360; }             </style>             <div style="background:#154360; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">DVV (Digital and Population Data Services Agency)</span>             </div>             <div class="pp-row" style="color:#154360; font-weight:600;">Government & legal registration</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Hallituskatu 5 C, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>029 5536000</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://dvv.fi/en/rovaniemi-en" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_28e2e44533bceccb77f7bacee2c930dc.setContent(html_c0ad40d456f61b57102188bcb3d4b3be);
+            
+        
+
+        marker_7559c4ce99400527c002a7df1f321196.bindPopup(popup_28e2e44533bceccb77f7bacee2c930dc)
+        ;
+
+        
+    
+    
+            marker_7559c4ce99400527c002a7df1f321196.bindTooltip(
+                `<div>
+                     DVV (Digital and Population Data Services Agency)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7559c4ce99400527c002a7df1f321196.setIcon(icon_9ffe2c0daa4450b0a2accf27de04a9aa);
+            
+    
+            var marker_3dd7c0ee5c5998ad2feb7aae2d0e260e = L.marker(
+                [66.4967227599788, 25.728612729175875],
+                {
+}
+            ).addTo(marker_cluster_b59ab5f43cf15154f182fded3696e1da);
+        
+    
+            var icon_f5092f31d78b8d60ed409f4597bc2b57 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1be4b83204f25d384fad69ad5aa9e3e3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_90987830031969d8c9acdbdf7b2a9e9a = $(`<div id="html_90987830031969d8c9acdbdf7b2a9e9a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #154360; }             </style>             <div style="background:#154360; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Poliisi (Lapland Police Department, Rovaniemi station)</span>             </div>             <div class="pp-row" style="color:#154360; font-weight:600;">Government & legal registration</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Hallituskatu 3 A, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>029 5460321</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://poliisi.fi/lapin-poliisilaitos" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_1be4b83204f25d384fad69ad5aa9e3e3.setContent(html_90987830031969d8c9acdbdf7b2a9e9a);
+            
+        
+
+        marker_3dd7c0ee5c5998ad2feb7aae2d0e260e.bindPopup(popup_1be4b83204f25d384fad69ad5aa9e3e3)
+        ;
+
+        
+    
+    
+            marker_3dd7c0ee5c5998ad2feb7aae2d0e260e.bindTooltip(
+                `<div>
+                     Poliisi (Lapland Police Department, Rovaniemi station)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3dd7c0ee5c5998ad2feb7aae2d0e260e.setIcon(icon_f5092f31d78b8d60ed409f4597bc2b57);
+            
+    
+            var marker_e8b5a0976d4210115e3aef79523811e1 = L.marker(
+                [66.50084108654617, 25.734923800872213],
+                {
+}
+            ).addTo(marker_cluster_b59ab5f43cf15154f182fded3696e1da);
+        
+    
+            var icon_bd287bd817553bc950f24771b86ce8c1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7796a3b5225205010983a93940c45d15 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_fad3a3b73c46537f07bc0adfe2d0b08d = $(`<div id="html_fad3a3b73c46537f07bc0adfe2d0b08d" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #154360; }             </style>             <div style="background:#154360; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">TE-toimisto (Employment Office)</span>             </div>             <div class="pp-row" style="color:#154360; font-weight:600;">Government & legal registration</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Valtakatu 16, 96200 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-globe"></i><a href="https://tyomarkkinatori.fi/en/regional-pages/rovaseutu-employment-area/frontpage" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_7796a3b5225205010983a93940c45d15.setContent(html_fad3a3b73c46537f07bc0adfe2d0b08d);
+            
+        
+
+        marker_e8b5a0976d4210115e3aef79523811e1.bindPopup(popup_7796a3b5225205010983a93940c45d15)
+        ;
+
+        
+    
+    
+            marker_e8b5a0976d4210115e3aef79523811e1.bindTooltip(
+                `<div>
+                     TE-toimisto (Employment Office)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e8b5a0976d4210115e3aef79523811e1.setIcon(icon_bd287bd817553bc950f24771b86ce8c1);
+            
+    
+            var marker_ff76d34936d18e1042e7eba475e3e295 = L.marker(
+                [66.49991009984741, 25.73232852181392],
+                {
+}
+            ).addTo(marker_cluster_b59ab5f43cf15154f182fded3696e1da);
+        
+    
+            var icon_d8e6e596864cd50ded7da1cb2891c040 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_df987d48c3f632aa0e927eba8ed982aa = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_f6c134cdd694f1996574a22083ae26c7 = $(`<div id="html_f6c134cdd694f1996574a22083ae26c7" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #154360; }             </style>             <div style="background:#154360; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Migri (Finnish Immigration Service Point)</span>             </div>             <div class="pp-row" style="color:#154360; font-weight:600;">Government & legal registration</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Ruokasenkatu 2 A, 96200 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-globe"></i><a href="https://migri.fi/en/home" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_df987d48c3f632aa0e927eba8ed982aa.setContent(html_f6c134cdd694f1996574a22083ae26c7);
+            
+        
+
+        marker_ff76d34936d18e1042e7eba475e3e295.bindPopup(popup_df987d48c3f632aa0e927eba8ed982aa)
+        ;
+
+        
+    
+    
+            marker_ff76d34936d18e1042e7eba475e3e295.bindTooltip(
+                `<div>
+                     Migri (Finnish Immigration Service Point)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ff76d34936d18e1042e7eba475e3e295.setIcon(icon_d8e6e596864cd50ded7da1cb2891c040);
+            
+    
+            var marker_a62482e99ea64ad1c11fdb8a43f3248c = L.marker(
+                [66.49691102155485, 25.727445279607096],
+                {
+}
+            ).addTo(marker_cluster_b59ab5f43cf15154f182fded3696e1da);
+        
+    
+            var icon_afdeb3f10d8fab4769ea28e824da2440 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3ebe36f84aacf5905a6370a45361a812 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_61e1943176c6f014302aec7acc5026e7 = $(`<div id="html_61e1943176c6f014302aec7acc5026e7" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #154360; }             </style>             <div style="background:#154360; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Vero (Finnish Tax Administration)</span>             </div>             <div class="pp-row" style="color:#154360; font-weight:600;">Government & legal registration</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Hallituskatu 5 C, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.vero.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_3ebe36f84aacf5905a6370a45361a812.setContent(html_61e1943176c6f014302aec7acc5026e7);
+            
+        
+
+        marker_a62482e99ea64ad1c11fdb8a43f3248c.bindPopup(popup_3ebe36f84aacf5905a6370a45361a812)
+        ;
+
+        
+    
+    
+            marker_a62482e99ea64ad1c11fdb8a43f3248c.bindTooltip(
+                `<div>
+                     Vero (Finnish Tax Administration)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a62482e99ea64ad1c11fdb8a43f3248c.setIcon(icon_afdeb3f10d8fab4769ea28e824da2440);
+            
+    
+            var marker_367b98cfcd7659bd49b377d8e66ed798 = L.marker(
+                [66.49791761524021, 25.720595282605377],
+                {
+}
+            ).addTo(marker_cluster_b59ab5f43cf15154f182fded3696e1da);
+        
+    
+            var icon_7974847874d5d2d7b00dc550e4bba11f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4ccf84cb5860c8d93cfc45351bd90973 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_141ea972cabd763d52b680b3c6564f30 = $(`<div id="html_141ea972cabd763d52b680b3c6564f30" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #154360; }             </style>             <div style="background:#154360; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Kela (Social Insurance Institution)</span>             </div>             <div class="pp-row" style="color:#154360; font-weight:600;">Government & legal registration</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Hallituskatu 20, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.kela.fi/main-page" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_4ccf84cb5860c8d93cfc45351bd90973.setContent(html_141ea972cabd763d52b680b3c6564f30);
+            
+        
+
+        marker_367b98cfcd7659bd49b377d8e66ed798.bindPopup(popup_4ccf84cb5860c8d93cfc45351bd90973)
+        ;
+
+        
+    
+    
+            marker_367b98cfcd7659bd49b377d8e66ed798.bindTooltip(
+                `<div>
+                     Kela (Social Insurance Institution)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_367b98cfcd7659bd49b377d8e66ed798.setIcon(icon_7974847874d5d2d7b00dc550e4bba11f);
+            
+    
+            marker_cluster_b59ab5f43cf15154f182fded3696e1da.addTo(feature_group_d3dd933ee2f2bd357729e045d14934bd);
+        
+    
+            feature_group_d3dd933ee2f2bd357729e045d14934bd.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_ff1d31ffc588655ca86ef9a13a66e598 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_57bc679a5645ad6a06470f7f36b1cc33 = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_70c547cfc4765968b60de836e99d381e = L.marker(
+                [66.50279433411237, 25.72873796901833],
+                {
+}
+            ).addTo(marker_cluster_57bc679a5645ad6a06470f7f36b1cc33);
+        
+    
+            var icon_b7b1a3a5dbebdb48dc2925b7bdae5bb4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "graduation-cap",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c6e39472f7e98d61ec31c28adc4ac4f6 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c1aa9f371052c658f69774ad208c496c = $(`<div id="html_c1aa9f371052c658f69774ad208c496c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #00b894; }             </style>             <div style="background:#00b894; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Pre-School (City of Rovaniemi)</span>             </div>             <div class="pp-row" style="color:#00b894; font-weight:600;">Education & family</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Koskikatu 19, 96200 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>016 3226600</div><div class="pp-row"><i class="fa fa-envelope"></i>varhaiskasvatus.palveluohjaus@rovaniemi.fi</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://international.rovaniemi.fi/Arctic-Hometown/Education-and-Learning/Early-Childhood-Education-and-Care-" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_c6e39472f7e98d61ec31c28adc4ac4f6.setContent(html_c1aa9f371052c658f69774ad208c496c);
+            
+        
+
+        marker_70c547cfc4765968b60de836e99d381e.bindPopup(popup_c6e39472f7e98d61ec31c28adc4ac4f6)
+        ;
+
+        
+    
+    
+            marker_70c547cfc4765968b60de836e99d381e.bindTooltip(
+                `<div>
+                     Pre-School (City of Rovaniemi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_70c547cfc4765968b60de836e99d381e.setIcon(icon_b7b1a3a5dbebdb48dc2925b7bdae5bb4);
+            
+    
+            var marker_a07c16a3e7dc7bff57949cd824e637d5 = L.marker(
+                [66.50279433411237, 25.72873796901833],
+                {
+}
+            ).addTo(marker_cluster_57bc679a5645ad6a06470f7f36b1cc33);
+        
+    
+            var icon_98c2c7b4326e959f910931ef9554c42b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "graduation-cap",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cba1be51a94eb4d5671b09cdb57f4d15 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_a90fb2ada70bda7edd096a7b750d8393 = $(`<div id="html_a90fb2ada70bda7edd096a7b750d8393" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #00b894; }             </style>             <div style="background:#00b894; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Basic Education (City of Rovaniemi)</span>             </div>             <div class="pp-row" style="color:#00b894; font-weight:600;">Education & family</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Koskikatu 19, 96200 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>016 3226400</div><div class="pp-row"><i class="fa fa-envelope"></i>asiakasohjaus.perusopetus@rovaniemi.fi</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://international.rovaniemi.fi/Services/Basic-Education/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_cba1be51a94eb4d5671b09cdb57f4d15.setContent(html_a90fb2ada70bda7edd096a7b750d8393);
+            
+        
+
+        marker_a07c16a3e7dc7bff57949cd824e637d5.bindPopup(popup_cba1be51a94eb4d5671b09cdb57f4d15)
+        ;
+
+        
+    
+    
+            marker_a07c16a3e7dc7bff57949cd824e637d5.bindTooltip(
+                `<div>
+                     Basic Education (City of Rovaniemi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a07c16a3e7dc7bff57949cd824e637d5.setIcon(icon_98c2c7b4326e959f910931ef9554c42b);
+            
+    
+            var marker_44564b2b3196579aee05c419878e586b = L.marker(
+                [66.50279433411237, 25.72873796901833],
+                {
+}
+            ).addTo(marker_cluster_57bc679a5645ad6a06470f7f36b1cc33);
+        
+    
+            var icon_161d78ff6f33c7129b4635a369bdd866 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "graduation-cap",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cdd6954cedb39cc33fe007160b02c90b = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b6e370cfb51d1291b3de1d70cb0897d1 = $(`<div id="html_b6e370cfb51d1291b3de1d70cb0897d1" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #00b894; }             </style>             <div style="background:#00b894; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Secondary Education (City of Rovaniemi)</span>             </div>             <div class="pp-row" style="color:#00b894; font-weight:600;">Education & family</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Koskikatu 19, 96200 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>016 3226800</div><div class="pp-row"><i class="fa fa-envelope"></i>info.osviitta@rovaniemi.fi</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://international.rovaniemi.fi/Services/General-Upper-Secondary-Education/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_cdd6954cedb39cc33fe007160b02c90b.setContent(html_b6e370cfb51d1291b3de1d70cb0897d1);
+            
+        
+
+        marker_44564b2b3196579aee05c419878e586b.bindPopup(popup_cdd6954cedb39cc33fe007160b02c90b)
+        ;
+
+        
+    
+    
+            marker_44564b2b3196579aee05c419878e586b.bindTooltip(
+                `<div>
+                     Secondary Education (City of Rovaniemi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_44564b2b3196579aee05c419878e586b.setIcon(icon_161d78ff6f33c7129b4635a369bdd866);
+            
+    
+            var marker_7df7176bed5d23844e912039228546fd = L.marker(
+                [66.48538573331643, 25.714947153258844],
+                {
+}
+            ).addTo(marker_cluster_57bc679a5645ad6a06470f7f36b1cc33);
+        
+    
+            var icon_36afb4a874136a65c7c4762317133e1f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "graduation-cap",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_420905738cdb94c88d8b0c799216e6d3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b3caa08caeb6646b1ae21f780b842540 = $(`<div id="html_b3caa08caeb6646b1ae21f780b842540" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #00b894; }             </style>             <div style="background:#00b894; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Higher Education (University of Lapland)</span>             </div>             <div class="pp-row" style="color:#00b894; font-weight:600;">Education & family</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Yliopistonkatu 8, 96300 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>016 341 341</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://ulapland.fi/en/frontpage/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_420905738cdb94c88d8b0c799216e6d3.setContent(html_b3caa08caeb6646b1ae21f780b842540);
+            
+        
+
+        marker_7df7176bed5d23844e912039228546fd.bindPopup(popup_420905738cdb94c88d8b0c799216e6d3)
+        ;
+
+        
+    
+    
+            marker_7df7176bed5d23844e912039228546fd.bindTooltip(
+                `<div>
+                     Higher Education (University of Lapland)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7df7176bed5d23844e912039228546fd.setIcon(icon_36afb4a874136a65c7c4762317133e1f);
+            
+    
+            var marker_aa8d5346ba1705bb842fd517fc21c8b5 = L.marker(
+                [66.4816859527522, 25.722012423220967],
+                {
+}
+            ).addTo(marker_cluster_57bc679a5645ad6a06470f7f36b1cc33);
+        
+    
+            var icon_2b6a93536c081aeb99376fcd4199a2c1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "graduation-cap",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d0d3703d9f14ea7a1e9fb9bd80a3b300 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d485cbdab5df4a385343e3448c5598b5 = $(`<div id="html_d485cbdab5df4a385343e3448c5598b5" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #00b894; }             </style>             <div style="background:#00b894; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Higher Education (Lapland University of Applied Sciences)</span>             </div>             <div class="pp-row" style="color:#00b894; font-weight:600;">Education & family</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Jokiväylä 11 C, 96300 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>020 798 6000</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://lapinamk.fi/en/homepage/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_d0d3703d9f14ea7a1e9fb9bd80a3b300.setContent(html_d485cbdab5df4a385343e3448c5598b5);
+            
+        
+
+        marker_aa8d5346ba1705bb842fd517fc21c8b5.bindPopup(popup_d0d3703d9f14ea7a1e9fb9bd80a3b300)
+        ;
+
+        
+    
+    
+            marker_aa8d5346ba1705bb842fd517fc21c8b5.bindTooltip(
+                `<div>
+                     Higher Education (Lapland University of Applied Sciences)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_aa8d5346ba1705bb842fd517fc21c8b5.setIcon(icon_2b6a93536c081aeb99376fcd4199a2c1);
+            
+    
+            var marker_cfd7ac1ed3f041393f152c54a2d368fc = L.marker(
+                [66.50085855853807, 25.734943455526302],
+                {
+}
+            ).addTo(marker_cluster_57bc679a5645ad6a06470f7f36b1cc33);
+        
+    
+            var icon_5d31b0eaca5fc757a680ca0e9653336a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "graduation-cap",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b83b5dcfe197134513af023a9a7a2d70 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_fde41add3be660895f736270e8413308 = $(`<div id="html_fde41add3be660895f736270e8413308" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #00b894; }             </style>             <div style="background:#00b894; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">International House Rovaniemi (settling in, job search, general advice)</span>             </div>             <div class="pp-row" style="color:#00b894; font-weight:600;">Education & family</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Valtakatu 16, 96200 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-envelope"></i>ih@rovaniemi.fi</div>         </div>         </div>`)[0];
+                popup_b83b5dcfe197134513af023a9a7a2d70.setContent(html_fde41add3be660895f736270e8413308);
+            
+        
+
+        marker_cfd7ac1ed3f041393f152c54a2d368fc.bindPopup(popup_b83b5dcfe197134513af023a9a7a2d70)
+        ;
+
+        
+    
+    
+            marker_cfd7ac1ed3f041393f152c54a2d368fc.bindTooltip(
+                `<div>
+                     International House Rovaniemi (settling in, job search, general advice)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cfd7ac1ed3f041393f152c54a2d368fc.setIcon(icon_5d31b0eaca5fc757a680ca0e9653336a);
+            
+    
+            var marker_d3509fdbcef3692d11d0ff72bc8ab41c = L.marker(
+                [66.49663456540142, 25.722549491288152],
+                {
+}
+            ).addTo(marker_cluster_57bc679a5645ad6a06470f7f36b1cc33);
+        
+    
+            var icon_cdf9d0d73237d005b452216b7ac995ba = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "graduation-cap",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_80dcd95499c3e91af3179137b437f67c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_fe3cfd24cd554679ed36d02170cf20c0 = $(`<div id="html_fe3cfd24cd554679ed36d02170cf20c0" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #00b894; }             </style>             <div style="background:#00b894; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Rovaniemi City Library</span>             </div>             <div class="pp-row" style="color:#00b894; font-weight:600;">Education & family</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Jorma Eton tie 6, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>050 3151485</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://lapinkirjasto.finna.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_80dcd95499c3e91af3179137b437f67c.setContent(html_fe3cfd24cd554679ed36d02170cf20c0);
+            
+        
+
+        marker_d3509fdbcef3692d11d0ff72bc8ab41c.bindPopup(popup_80dcd95499c3e91af3179137b437f67c)
+        ;
+
+        
+    
+    
+            marker_d3509fdbcef3692d11d0ff72bc8ab41c.bindTooltip(
+                `<div>
+                     Rovaniemi City Library
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d3509fdbcef3692d11d0ff72bc8ab41c.setIcon(icon_cdf9d0d73237d005b452216b7ac995ba);
+            
+    
+            marker_cluster_57bc679a5645ad6a06470f7f36b1cc33.addTo(feature_group_ff1d31ffc588655ca86ef9a13a66e598);
+        
+    
+            feature_group_ff1d31ffc588655ca86ef9a13a66e598.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_675a9358fe94258eea32231744377c2e = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_3d65913913550c240df2a70312ad4905 = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_90df988270e7be72eb754b3e2abc29c9 = L.marker(
+                [66.49227180482116, 25.773972333627828],
+                {
+}
+            ).addTo(marker_cluster_3d65913913550c240df2a70312ad4905);
+        
+    
+            var icon_15d6219629805053c213d6426370759a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "h-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_702d0547d10086ab94ef75839b8a76dc = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_01bbbdd605dc19a2a8eb3aeb3e8ef441 = $(`<div id="html_01bbbdd605dc19a2a8eb3aeb3e8ef441" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #d63031; }             </style>             <div style="background:#d63031; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Lapland Central Hospital</span>             </div>             <div class="pp-row" style="color:#d63031; font-weight:600;">Health & dental</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Ounasrinteentie 22, 96400 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>116 117</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://lapha.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_702d0547d10086ab94ef75839b8a76dc.setContent(html_01bbbdd605dc19a2a8eb3aeb3e8ef441);
+            
+        
+
+        marker_90df988270e7be72eb754b3e2abc29c9.bindPopup(popup_702d0547d10086ab94ef75839b8a76dc)
+        ;
+
+        
+    
+    
+            marker_90df988270e7be72eb754b3e2abc29c9.bindTooltip(
+                `<div>
+                     Lapland Central Hospital
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_90df988270e7be72eb754b3e2abc29c9.setIcon(icon_15d6219629805053c213d6426370759a);
+            
+    
+            var marker_d54dec5c4cc9b55431904968c84ba855 = L.marker(
+                [66.48538193246647, 25.71268940131137],
+                {
+}
+            ).addTo(marker_cluster_3d65913913550c240df2a70312ad4905);
+        
+    
+            var icon_7f350e3152f2cd7ed4be633c7e641dc8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "h-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fed3dc69ae117cb830b242003c19da64 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_bf44f763a9f8f6222c40f0786972e85a = $(`<div id="html_bf44f763a9f8f6222c40f0786972e85a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #d63031; }             </style>             <div style="background:#d63031; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">FSHS Rovaniemi (Student health services)</span>             </div>             <div class="pp-row" style="color:#d63031; font-weight:600;">Health & dental</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Yliopistonkatu 8 A 3, 96300 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>046 7101073</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.yths.fi/en/frontpage/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_fed3dc69ae117cb830b242003c19da64.setContent(html_bf44f763a9f8f6222c40f0786972e85a);
+            
+        
+
+        marker_d54dec5c4cc9b55431904968c84ba855.bindPopup(popup_fed3dc69ae117cb830b242003c19da64)
+        ;
+
+        
+    
+    
+            marker_d54dec5c4cc9b55431904968c84ba855.bindTooltip(
+                `<div>
+                     FSHS Rovaniemi (Student health services)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d54dec5c4cc9b55431904968c84ba855.setIcon(icon_7f350e3152f2cd7ed4be633c7e641dc8);
+            
+    
+            var marker_06ebbe7a565d82adec2f13934c27a3c1 = L.marker(
+                [66.49708669400349, 25.707030511345664],
+                {
+}
+            ).addTo(marker_cluster_3d65913913550c240df2a70312ad4905);
+        
+    
+            var icon_e0bf0ccadf6a11213fb1df88891c9020 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "h-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_73814d9ce4825b8413767b807761c8d6 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_268ac088ac7f980ebf2341161d40dd3e = $(`<div id="html_268ac088ac7f980ebf2341161d40dd3e" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #d63031; }             </style>             <div style="background:#d63031; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Mehiläinen Rovaniemi (Registration not required in Rovaniemi)</span>             </div>             <div class="pp-row" style="color:#d63031; font-weight:600;">Health & dental</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Lampelankatu 6, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>010 414 0200</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.mehilainen.fi/en/locations/mehilainen-rovaniemi" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_73814d9ce4825b8413767b807761c8d6.setContent(html_268ac088ac7f980ebf2341161d40dd3e);
+            
+        
+
+        marker_06ebbe7a565d82adec2f13934c27a3c1.bindPopup(popup_73814d9ce4825b8413767b807761c8d6)
+        ;
+
+        
+    
+    
+            marker_06ebbe7a565d82adec2f13934c27a3c1.bindTooltip(
+                `<div>
+                     Mehiläinen Rovaniemi (Registration not required in Rovaniemi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_06ebbe7a565d82adec2f13934c27a3c1.setIcon(icon_e0bf0ccadf6a11213fb1df88891c9020);
+            
+    
+            var marker_d8013da146ff8877dd28bbbac05250cd = L.marker(
+                [66.50228420016974, 25.72928038818085],
+                {
+}
+            ).addTo(marker_cluster_3d65913913550c240df2a70312ad4905);
+        
+    
+            var icon_7799b9849827edb95619684e5d281e6d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "h-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5323bcfa487dd1a4c3d95adfc6e20362 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_a2869edbd7bf90e42521b402f9527907 = $(`<div id="html_a2869edbd7bf90e42521b402f9527907" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #d63031; }             </style>             <div style="background:#d63031; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">ORAL (Dental care)</span>             </div>             <div class="pp-row" style="color:#d63031; font-weight:600;">Health & dental</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Maakuntakatu 29-31 A, Rovaniemi‎</div>             <div class="pp-row"><i class="fa fa-phone"></i>010 400 3400</div><div class="pp-row"><i class="fa fa-envelope"></i>rovaniemi@oral.fi</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.oral.fi/suun-terveys/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_5323bcfa487dd1a4c3d95adfc6e20362.setContent(html_a2869edbd7bf90e42521b402f9527907);
+            
+        
+
+        marker_d8013da146ff8877dd28bbbac05250cd.bindPopup(popup_5323bcfa487dd1a4c3d95adfc6e20362)
+        ;
+
+        
+    
+    
+            marker_d8013da146ff8877dd28bbbac05250cd.bindTooltip(
+                `<div>
+                     ORAL (Dental care)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d8013da146ff8877dd28bbbac05250cd.setIcon(icon_7799b9849827edb95619684e5d281e6d);
+            
+    
+            marker_cluster_3d65913913550c240df2a70312ad4905.addTo(feature_group_675a9358fe94258eea32231744377c2e);
+        
+    
+            feature_group_675a9358fe94258eea32231744377c2e.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_6d28fbae08de73cb1c1cf38d279dd6d5 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_4e57308a55e2f97ad5881051b0c62d2b = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_11fa2846562d0d4880a5a4829a35412c = L.marker(
+                [66.49251669884225, 25.6880249930676],
+                {
+}
+            ).addTo(marker_cluster_4e57308a55e2f97ad5881051b0c62d2b);
+        
+    
+            var icon_4d536e07ee4d343910a9b15b39eefd78 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "pink",
+  "iconColor": "white",
+  "icon": "medkit",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_315782bc9c085ce08add2c5d66e9159d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_814adbebeb4e8a814cd7ad4fd511cedc = $(`<div id="html_814adbebeb4e8a814cd7ad4fd511cedc" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #e84393; }             </style>             <div style="background:#e84393; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Local pharmacy (Pharmacy in Rovaniemi Prisma)</span>             </div>             <div class="pp-row" style="color:#e84393; font-weight:600;">Pharmacy</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Teollisuustie 2, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>029 3400 280</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.rovaniemenkeskusapteekki.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_315782bc9c085ce08add2c5d66e9159d.setContent(html_814adbebeb4e8a814cd7ad4fd511cedc);
+            
+        
+
+        marker_11fa2846562d0d4880a5a4829a35412c.bindPopup(popup_315782bc9c085ce08add2c5d66e9159d)
+        ;
+
+        
+    
+    
+            marker_11fa2846562d0d4880a5a4829a35412c.bindTooltip(
+                `<div>
+                     Local pharmacy (Pharmacy in Rovaniemi Prisma)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_11fa2846562d0d4880a5a4829a35412c.setIcon(icon_4d536e07ee4d343910a9b15b39eefd78);
+            
+    
+            var marker_d1840b5088ffc4f156df00f015e66b9b = L.marker(
+                [66.50235932127981, 25.7149498026079],
+                {
+}
+            ).addTo(marker_cluster_4e57308a55e2f97ad5881051b0c62d2b);
+        
+    
+            var icon_81fc64588e26574642d881870e6a9780 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "pink",
+  "iconColor": "white",
+  "icon": "medkit",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1b6bfd1d22337d253cb4f33ab7cb9229 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_19e34844995bd82f114d3da226a18d61 = $(`<div id="html_19e34844995bd82f114d3da226a18d61" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #e84393; }             </style>             <div style="background:#e84393; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Local pharmacy (Kairatie  Pharmacy)</span>             </div>             <div class="pp-row" style="color:#e84393; font-weight:600;">Pharmacy</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Kairatie 2, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.kairatienapteekki.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_1b6bfd1d22337d253cb4f33ab7cb9229.setContent(html_19e34844995bd82f114d3da226a18d61);
+            
+        
+
+        marker_d1840b5088ffc4f156df00f015e66b9b.bindPopup(popup_1b6bfd1d22337d253cb4f33ab7cb9229)
+        ;
+
+        
+    
+    
+            marker_d1840b5088ffc4f156df00f015e66b9b.bindTooltip(
+                `<div>
+                     Local pharmacy (Kairatie  Pharmacy)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d1840b5088ffc4f156df00f015e66b9b.setIcon(icon_81fc64588e26574642d881870e6a9780);
+            
+    
+            var marker_40a316529e321c7e8e27db2d72172fa9 = L.marker(
+                [66.49788810692718, 25.754153667918104],
+                {
+}
+            ).addTo(marker_cluster_4e57308a55e2f97ad5881051b0c62d2b);
+        
+    
+            var icon_f2f4db26e63315d33a60b7bf3c39ddee = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "pink",
+  "iconColor": "white",
+  "icon": "medkit",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_214b05a1f7ee98c06d1f7939ee1243f8 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_f11b3c9c2eb3e1b6f067118f32ab3832 = $(`<div id="html_f11b3c9c2eb3e1b6f067118f32ab3832" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #e84393; }             </style>             <div style="background:#e84393; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Local pharmacy (Ounas Pharmacy)</span>             </div>             <div class="pp-row" style="color:#e84393; font-weight:600;">Pharmacy</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Ounasvaarantie 15, 96400 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>040 3156500</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://ounasapteekki.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_214b05a1f7ee98c06d1f7939ee1243f8.setContent(html_f11b3c9c2eb3e1b6f067118f32ab3832);
+            
+        
+
+        marker_40a316529e321c7e8e27db2d72172fa9.bindPopup(popup_214b05a1f7ee98c06d1f7939ee1243f8)
+        ;
+
+        
+    
+    
+            marker_40a316529e321c7e8e27db2d72172fa9.bindTooltip(
+                `<div>
+                     Local pharmacy (Ounas Pharmacy)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_40a316529e321c7e8e27db2d72172fa9.setIcon(icon_f2f4db26e63315d33a60b7bf3c39ddee);
+            
+    
+            marker_cluster_4e57308a55e2f97ad5881051b0c62d2b.addTo(feature_group_6d28fbae08de73cb1c1cf38d279dd6d5);
+        
+    
+            feature_group_6d28fbae08de73cb1c1cf38d279dd6d5.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_0858ada782cbce46db3eebc4a2480eb9 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_8f7728965a8ac1f78dc1877f3c8438bb = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_2b6cf6005938b7ae5841362ea80e66a4 = L.marker(
+                [66.49251669884225, 25.6880249930676],
+                {
+}
+            ).addTo(marker_cluster_8f7728965a8ac1f78dc1877f3c8438bb);
+        
+    
+            var icon_b12438671659923af8552696f3e3d54c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_071bd8e7d4ee1ab10d36f22ab29aa9c9 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_5de2597ab587ae5d3b5e4cffc1d2090c = $(`<div id="html_5de2597ab587ae5d3b5e4cffc1d2090c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #6c5ce7; }             </style>             <div style="background:#6c5ce7; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Prisma Rovaniemi</span>             </div>             <div class="pp-row" style="color:#6c5ce7; font-weight:600;">Supermarkets</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Teollisuustie 2, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>016 3305500</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.prisma.fi/myymalat/552112880" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_071bd8e7d4ee1ab10d36f22ab29aa9c9.setContent(html_5de2597ab587ae5d3b5e4cffc1d2090c);
+            
+        
+
+        marker_2b6cf6005938b7ae5841362ea80e66a4.bindPopup(popup_071bd8e7d4ee1ab10d36f22ab29aa9c9)
+        ;
+
+        
+    
+    
+            marker_2b6cf6005938b7ae5841362ea80e66a4.bindTooltip(
+                `<div>
+                     Prisma Rovaniemi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2b6cf6005938b7ae5841362ea80e66a4.setIcon(icon_b12438671659923af8552696f3e3d54c);
+            
+    
+            var marker_d1901bca85e6ca4c04b4ef58f6c48def = L.marker(
+                [66.49170991803786, 25.69460447806653],
+                {
+}
+            ).addTo(marker_cluster_8f7728965a8ac1f78dc1877f3c8438bb);
+        
+    
+            var icon_36f2a997a84b79fa2aa7b191ea6ad073 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_20ff435fd702109e1a519d73f1829f54 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_3c7dcc4bada60462d5dcf31c9854788a = $(`<div id="html_3c7dcc4bada60462d5dcf31c9854788a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #6c5ce7; }             </style>             <div style="background:#6c5ce7; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Lidl Rovaniemi</span>             </div>             <div class="pp-row" style="color:#6c5ce7; font-weight:600;">Supermarkets</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Oijustie 2, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>09 42452111</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.lidl.fi/s/fi-FI/myymaelaet/rovaniemi/oijustie-2/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_20ff435fd702109e1a519d73f1829f54.setContent(html_3c7dcc4bada60462d5dcf31c9854788a);
+            
+        
+
+        marker_d1901bca85e6ca4c04b4ef58f6c48def.bindPopup(popup_20ff435fd702109e1a519d73f1829f54)
+        ;
+
+        
+    
+    
+            marker_d1901bca85e6ca4c04b4ef58f6c48def.bindTooltip(
+                `<div>
+                     Lidl Rovaniemi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d1901bca85e6ca4c04b4ef58f6c48def.setIcon(icon_36f2a997a84b79fa2aa7b191ea6ad073);
+            
+    
+            var marker_3cf2c7810e5abe3b200e721602277329 = L.marker(
+                [66.49611754546383, 25.707243297853783],
+                {
+}
+            ).addTo(marker_cluster_8f7728965a8ac1f78dc1877f3c8438bb);
+        
+    
+            var icon_52a2d9e477909ff85ef2f30f7609588b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8683225be55bdde8a1beefa0109e0b6e = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_530fcc865d53e9c55fcb744420dfd57f = $(`<div id="html_530fcc865d53e9c55fcb744420dfd57f" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #6c5ce7; }             </style>             <div style="background:#6c5ce7; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Minimani Rovaniemi</span>             </div>             <div class="pp-row" style="color:#6c5ce7; font-weight:600;">Supermarkets</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Lampelankatu 3, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>0290801590</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.minimani.fi/?utm_source=Google+&utm_medium=Google_My_Business&utm_campaign=website_clicks" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_8683225be55bdde8a1beefa0109e0b6e.setContent(html_530fcc865d53e9c55fcb744420dfd57f);
+            
+        
+
+        marker_3cf2c7810e5abe3b200e721602277329.bindPopup(popup_8683225be55bdde8a1beefa0109e0b6e)
+        ;
+
+        
+    
+    
+            marker_3cf2c7810e5abe3b200e721602277329.bindTooltip(
+                `<div>
+                     Minimani Rovaniemi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3cf2c7810e5abe3b200e721602277329.setIcon(icon_52a2d9e477909ff85ef2f30f7609588b);
+            
+    
+            var marker_13b3777f4909c225303b14f43f6333d1 = L.marker(
+                [66.51596287652934, 25.78293977238624],
+                {
+}
+            ).addTo(marker_cluster_8f7728965a8ac1f78dc1877f3c8438bb);
+        
+    
+            var icon_8ba086c8120b0f1d8f005234ba3bf5c0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_867c74bef2d10c98f853338293253b78 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_1ec1a8198c8210fbe486dfac0eb1ecbe = $(`<div id="html_1ec1a8198c8210fbe486dfac0eb1ecbe" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #6c5ce7; }             </style>             <div style="background:#6c5ce7; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">S-market Saarenkylä</span>             </div>             <div class="pp-row" style="color:#6c5ce7; font-weight:600;">Supermarkets</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Napapiirintie 1, 96900 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>044 7886651</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.s-kaupat.fi/myymala/s-market-saarenkyla/720563139" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_867c74bef2d10c98f853338293253b78.setContent(html_1ec1a8198c8210fbe486dfac0eb1ecbe);
+            
+        
+
+        marker_13b3777f4909c225303b14f43f6333d1.bindPopup(popup_867c74bef2d10c98f853338293253b78)
+        ;
+
+        
+    
+    
+            marker_13b3777f4909c225303b14f43f6333d1.bindTooltip(
+                `<div>
+                     S-market Saarenkylä
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_13b3777f4909c225303b14f43f6333d1.setIcon(icon_8ba086c8120b0f1d8f005234ba3bf5c0);
+            
+    
+            var marker_e9ffb2ec6050bfb690bc42c7a579fab0 = L.marker(
+                [66.50087521024187, 25.71502669694362],
+                {
+}
+            ).addTo(marker_cluster_8f7728965a8ac1f78dc1877f3c8438bb);
+        
+    
+            var icon_2d608921785652570400adba2abf9185 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7496e5876aba3c41cd80103c0f0ed50d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_fa462914063d717a9212c0cec2b7a84c = $(`<div id="html_fa462914063d717a9212c0cec2b7a84c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #6c5ce7; }             </style>             <div style="background:#6c5ce7; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">K-Supermarket Kauppatori</span>             </div>             <div class="pp-row" style="color:#6c5ce7; font-weight:600;">Supermarkets</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Lapinkävijäntie 7, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>040 7767750</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.k-ruoka.fi/kauppa/k-supermarket-kauppatori" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_7496e5876aba3c41cd80103c0f0ed50d.setContent(html_fa462914063d717a9212c0cec2b7a84c);
+            
+        
+
+        marker_e9ffb2ec6050bfb690bc42c7a579fab0.bindPopup(popup_7496e5876aba3c41cd80103c0f0ed50d)
+        ;
+
+        
+    
+    
+            marker_e9ffb2ec6050bfb690bc42c7a579fab0.bindTooltip(
+                `<div>
+                     K-Supermarket Kauppatori
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e9ffb2ec6050bfb690bc42c7a579fab0.setIcon(icon_2d608921785652570400adba2abf9185);
+            
+    
+            var marker_96bf1e56457803b8cb980f0d93f4d1bf = L.marker(
+                [66.51847450779871, 25.753930087536247],
+                {
+}
+            ).addTo(marker_cluster_8f7728965a8ac1f78dc1877f3c8438bb);
+        
+    
+            var icon_65c58a5a422415a96736c6fbb8db03de = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ce7fee0d3104fc364deaa2c0c5a84959 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_5f6186f1f7a33112913191adc732a196 = $(`<div id="html_5f6186f1f7a33112913191adc732a196" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #6c5ce7; }             </style>             <div style="background:#6c5ce7; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">K-Citymarket Rovaniemi</span>             </div>             <div class="pp-row" style="color:#6c5ce7; font-weight:600;">Supermarkets</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Pulkamontie 1, 96900 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>010 5387100</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.k-ruoka.fi/kauppa/k-citymarket-rovaniemi" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_ce7fee0d3104fc364deaa2c0c5a84959.setContent(html_5f6186f1f7a33112913191adc732a196);
+            
+        
+
+        marker_96bf1e56457803b8cb980f0d93f4d1bf.bindPopup(popup_ce7fee0d3104fc364deaa2c0c5a84959)
+        ;
+
+        
+    
+    
+            marker_96bf1e56457803b8cb980f0d93f4d1bf.bindTooltip(
+                `<div>
+                     K-Citymarket Rovaniemi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_96bf1e56457803b8cb980f0d93f4d1bf.setIcon(icon_65c58a5a422415a96736c6fbb8db03de);
+            
+    
+            marker_cluster_8f7728965a8ac1f78dc1877f3c8438bb.addTo(feature_group_0858ada782cbce46db3eebc4a2480eb9);
+        
+    
+            feature_group_0858ada782cbce46db3eebc4a2480eb9.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_bbef07e8f3ae44eae20c9a288f3072cb = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_f7844a6ab5f044016cdee0d6bcba4541 = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_dd23e746eef06f60cc55d31bb23e0f0c = L.marker(
+                [66.50228420016974, 25.72928038818085],
+                {
+}
+            ).addTo(marker_cluster_f7844a6ab5f044016cdee0d6bcba4541);
+        
+    
+            var icon_33ee708ff76cea04c0aa56b8ceea8fbb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkpurple",
+  "iconColor": "white",
+  "icon": "shopping-bag",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_696c6aa23a788561493bdc7426b305c6 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_e61b7d84c4dd4fbcc2517e4ecfb3df88 = $(`<div id="html_e61b7d84c4dd4fbcc2517e4ecfb3df88" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #4a235a; }             </style>             <div style="background:#4a235a; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Sampokeskus Shopping Centre</span>             </div>             <div class="pp-row" style="color:#4a235a; font-weight:600;">Shopping Centres</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Maakuntakatu 29-31 A, 96200 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>040 6766343</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://sampokeskus.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_696c6aa23a788561493bdc7426b305c6.setContent(html_e61b7d84c4dd4fbcc2517e4ecfb3df88);
+            
+        
+
+        marker_dd23e746eef06f60cc55d31bb23e0f0c.bindPopup(popup_696c6aa23a788561493bdc7426b305c6)
+        ;
+
+        
+    
+    
+            marker_dd23e746eef06f60cc55d31bb23e0f0c.bindTooltip(
+                `<div>
+                     Sampokeskus Shopping Centre
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_dd23e746eef06f60cc55d31bb23e0f0c.setIcon(icon_33ee708ff76cea04c0aa56b8ceea8fbb);
+            
+    
+            var marker_3fe8717c9134c8cc99a00e5a224b8291 = L.marker(
+                [66.50307176565191, 25.72305800243377],
+                {
+}
+            ).addTo(marker_cluster_f7844a6ab5f044016cdee0d6bcba4541);
+        
+    
+            var icon_8c15eaff88fc3083954dcd6bebd37a5b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkpurple",
+  "iconColor": "white",
+  "icon": "shopping-bag",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_413fc4a396c0713a14073ceac83783c4 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_3df55c19e0dccc46d2cd637edd5aa399 = $(`<div id="html_3df55c19e0dccc46d2cd637edd5aa399" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #4a235a; }             </style>             <div style="background:#4a235a; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Shopping Centre Revontuli</span>             </div>             <div class="pp-row" style="color:#4a235a; font-weight:600;">Shopping Centres</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Koskikatu 27 B, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>040 4869991</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.kauppakeskusrevontuli.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_413fc4a396c0713a14073ceac83783c4.setContent(html_3df55c19e0dccc46d2cd637edd5aa399);
+            
+        
+
+        marker_3fe8717c9134c8cc99a00e5a224b8291.bindPopup(popup_413fc4a396c0713a14073ceac83783c4)
+        ;
+
+        
+    
+    
+            marker_3fe8717c9134c8cc99a00e5a224b8291.bindTooltip(
+                `<div>
+                     Shopping Centre Revontuli
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3fe8717c9134c8cc99a00e5a224b8291.setIcon(icon_8c15eaff88fc3083954dcd6bebd37a5b);
+            
+    
+            marker_cluster_f7844a6ab5f044016cdee0d6bcba4541.addTo(feature_group_bbef07e8f3ae44eae20c9a288f3072cb);
+        
+    
+            feature_group_bbef07e8f3ae44eae20c9a288f3072cb.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_79ae93d84db93487353b93fd21357b35 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_9541ce93503461e5e2bc20c4bd04e896 = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_91705cd4ef2fc1d43e9ec47300b88b7b = L.marker(
+                [66.49110758703023, 25.684252429591357],
+                {
+}
+            ).addTo(marker_cluster_9541ce93503461e5e2bc20c4bd04e896);
+        
+    
+            var icon_72aacaa3ca3837fb816a82977a218bde = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "cadetblue",
+  "iconColor": "white",
+  "icon": "plug",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4d9a1648d6f600d00395711af97f1cec = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_0fd4f6f8f318cb6e67ba42f9f7b01f36 = $(`<div id="html_0fd4f6f8f318cb6e67ba42f9f7b01f36" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #5f9ea0; }             </style>             <div style="background:#5f9ea0; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Gigantti Rovaniemi (Electronics & consumers)</span>             </div>             <div class="pp-row" style="color:#5f9ea0; font-weight:600;">Electronics</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Teollisuustie 5, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>020 321321</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.gigantti.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_4d9a1648d6f600d00395711af97f1cec.setContent(html_0fd4f6f8f318cb6e67ba42f9f7b01f36);
+            
+        
+
+        marker_91705cd4ef2fc1d43e9ec47300b88b7b.bindPopup(popup_4d9a1648d6f600d00395711af97f1cec)
+        ;
+
+        
+    
+    
+            marker_91705cd4ef2fc1d43e9ec47300b88b7b.bindTooltip(
+                `<div>
+                     Gigantti Rovaniemi (Electronics & consumers)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_91705cd4ef2fc1d43e9ec47300b88b7b.setIcon(icon_72aacaa3ca3837fb816a82977a218bde);
+            
+    
+            var marker_ea62c29176e4790bef399ee170184b10 = L.marker(
+                [66.49328215010058, 25.69255802985392],
+                {
+}
+            ).addTo(marker_cluster_9541ce93503461e5e2bc20c4bd04e896);
+        
+    
+            var icon_c011298ab7f8356c796a1f040b778be9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "cadetblue",
+  "iconColor": "white",
+  "icon": "plug",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1f5840026e36ab07a5073354a58e4f18 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_ea2830adfa69c14a042f3cba3e4a431e = $(`<div id="html_ea2830adfa69c14a042f3cba3e4a431e" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #5f9ea0; }             </style>             <div style="background:#5f9ea0; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Power Rovaniemi (Electronics & consumers)</span>             </div>             <div class="pp-row" style="color:#5f9ea0; font-weight:600;">Electronics</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Lampelankatu 9, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>03 050305</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.power.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_1f5840026e36ab07a5073354a58e4f18.setContent(html_ea2830adfa69c14a042f3cba3e4a431e);
+            
+        
+
+        marker_ea62c29176e4790bef399ee170184b10.bindPopup(popup_1f5840026e36ab07a5073354a58e4f18)
+        ;
+
+        
+    
+    
+            marker_ea62c29176e4790bef399ee170184b10.bindTooltip(
+                `<div>
+                     Power Rovaniemi (Electronics & consumers)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ea62c29176e4790bef399ee170184b10.setIcon(icon_c011298ab7f8356c796a1f040b778be9);
+            
+    
+            var marker_299de74c9966e87eff5b0ba77f0adc24 = L.marker(
+                [66.49365440853829, 25.68978951134537],
+                {
+}
+            ).addTo(marker_cluster_9541ce93503461e5e2bc20c4bd04e896);
+        
+    
+            var icon_82f1a981719a5bd923cdf3b0bf978486 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "cadetblue",
+  "iconColor": "white",
+  "icon": "plug",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0dabdde81518e17c23d4efe5f714a977 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_e35307f65a698d71f53178eb56a8f334 = $(`<div id="html_e35307f65a698d71f53178eb56a8f334" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #5f9ea0; }             </style>             <div style="background:#5f9ea0; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Euronics Rovaniemi (Electronics & consumers)</span>             </div>             <div class="pp-row" style="color:#5f9ea0; font-weight:600;">Electronics</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Lampelankatu 22, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>020 7568620</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.euronics.fi/fi/i/euronics-rovaniemi/157/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_0dabdde81518e17c23d4efe5f714a977.setContent(html_e35307f65a698d71f53178eb56a8f334);
+            
+        
+
+        marker_299de74c9966e87eff5b0ba77f0adc24.bindPopup(popup_0dabdde81518e17c23d4efe5f714a977)
+        ;
+
+        
+    
+    
+            marker_299de74c9966e87eff5b0ba77f0adc24.bindTooltip(
+                `<div>
+                     Euronics Rovaniemi (Electronics & consumers)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_299de74c9966e87eff5b0ba77f0adc24.setIcon(icon_82f1a981719a5bd923cdf3b0bf978486);
+            
+    
+            marker_cluster_9541ce93503461e5e2bc20c4bd04e896.addTo(feature_group_79ae93d84db93487353b93fd21357b35);
+        
+    
+            feature_group_79ae93d84db93487353b93fd21357b35.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_ecdb60466d24d08c92ec1cbe5a011bbf = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_03e1641ae1782fd518d17e1e96af864e = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_87d9e9cba6c7644cf165f2957b866458 = L.marker(
+                [66.49557123535102, 25.7114466777551],
+                {
+}
+            ).addTo(marker_cluster_03e1641ae1782fd518d17e1e96af864e);
+        
+    
+            var icon_dd65195b5f9e217a341270716ff8d791 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "cutlery",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_84c127b44fdecd03c29a6ddc7d94807e = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_a5344157112050b0afa79bbfbb903f16 = $(`<div id="html_a5344157112050b0afa79bbfbb903f16" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #e67e22; }             </style>             <div style="background:#e67e22; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">McDonald's Rovaniemi Lampela</span>             </div>             <div class="pp-row" style="color:#e67e22; font-weight:600;">Fast-Food</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Vierustie 1, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>040 7318585</div>         </div>         </div>`)[0];
+                popup_84c127b44fdecd03c29a6ddc7d94807e.setContent(html_a5344157112050b0afa79bbfbb903f16);
+            
+        
+
+        marker_87d9e9cba6c7644cf165f2957b866458.bindPopup(popup_84c127b44fdecd03c29a6ddc7d94807e)
+        ;
+
+        
+    
+    
+            marker_87d9e9cba6c7644cf165f2957b866458.bindTooltip(
+                `<div>
+                     McDonald's Rovaniemi Lampela
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_87d9e9cba6c7644cf165f2957b866458.setIcon(icon_dd65195b5f9e217a341270716ff8d791);
+            
+    
+            var marker_65c60c55559d170933d2b3945bab84cd = L.marker(
+                [66.50210023615908, 25.730031416378697],
+                {
+}
+            ).addTo(marker_cluster_03e1641ae1782fd518d17e1e96af864e);
+        
+    
+            var icon_1b0bbefb5b881441edc3b1623377350d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "cutlery",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9f253da89cc8f9ad26deb6dea5f62684 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_e599191a46547b273d2d520baf376659 = $(`<div id="html_e599191a46547b273d2d520baf376659" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #e67e22; }             </style>             <div style="background:#e67e22; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Subway</span>             </div>             <div class="pp-row" style="color:#e67e22; font-weight:600;">Fast-Food</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Maakuntakatu 29-31, Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>040 0381411</div>         </div>         </div>`)[0];
+                popup_9f253da89cc8f9ad26deb6dea5f62684.setContent(html_e599191a46547b273d2d520baf376659);
+            
+        
+
+        marker_65c60c55559d170933d2b3945bab84cd.bindPopup(popup_9f253da89cc8f9ad26deb6dea5f62684)
+        ;
+
+        
+    
+    
+            marker_65c60c55559d170933d2b3945bab84cd.bindTooltip(
+                `<div>
+                     Subway
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_65c60c55559d170933d2b3945bab84cd.setIcon(icon_1b0bbefb5b881441edc3b1623377350d);
+            
+    
+            var marker_62ed9f6c6e6b7ea653a3409fd9a908cd = L.marker(
+                [66.49621142420189, 25.70744685957396],
+                {
+}
+            ).addTo(marker_cluster_03e1641ae1782fd518d17e1e96af864e);
+        
+    
+            var icon_0ed24c49ce17365d4e2ea55315aecb43 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "cutlery",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_413ef3b0d05b0f07bfc2b9dfcb6b3ba2 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_7b38c44938fce36e16c849befe152d24 = $(`<div id="html_7b38c44938fce36e16c849befe152d24" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #e67e22; }             </style>             <div style="background:#e67e22; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Subway</span>             </div>             <div class="pp-row" style="color:#e67e22; font-weight:600;">Fast-Food</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Lampelankatu 3, Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>040 7093731</div>         </div>         </div>`)[0];
+                popup_413ef3b0d05b0f07bfc2b9dfcb6b3ba2.setContent(html_7b38c44938fce36e16c849befe152d24);
+            
+        
+
+        marker_62ed9f6c6e6b7ea653a3409fd9a908cd.bindPopup(popup_413ef3b0d05b0f07bfc2b9dfcb6b3ba2)
+        ;
+
+        
+    
+    
+            marker_62ed9f6c6e6b7ea653a3409fd9a908cd.bindTooltip(
+                `<div>
+                     Subway
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_62ed9f6c6e6b7ea653a3409fd9a908cd.setIcon(icon_0ed24c49ce17365d4e2ea55315aecb43);
+            
+    
+            marker_cluster_03e1641ae1782fd518d17e1e96af864e.addTo(feature_group_ecdb60466d24d08c92ec1cbe5a011bbf);
+        
+    
+            feature_group_ecdb60466d24d08c92ec1cbe5a011bbf.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_c84e90ade7d3109f028889f5bd364d34 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_ece36f685777b32bcaed76569a52009b = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_0d2f27b5efb021813949397d568d4722 = L.marker(
+                [66.49245046588537, 25.689013670946544],
+                {
+}
+            ).addTo(marker_cluster_ece36f685777b32bcaed76569a52009b);
+        
+    
+            var icon_724a37496c20ece48f09801da32b4d57 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "money",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_088d3d9a55156f47efa116aa2fb0fe5e = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_3eb9b6ac9068cc67ce8c278b8ac26143 = $(`<div id="html_3eb9b6ac9068cc67ce8c278b8ac26143" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #2d3436; }             </style>             <div style="background:#2d3436; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">S-pankki</span>             </div>             <div class="pp-row" style="color:#2d3436; font-weight:600;">Local Banking</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Teollisuustie 2, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>044 7885935</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.s-pankki.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_088d3d9a55156f47efa116aa2fb0fe5e.setContent(html_3eb9b6ac9068cc67ce8c278b8ac26143);
+            
+        
+
+        marker_0d2f27b5efb021813949397d568d4722.bindPopup(popup_088d3d9a55156f47efa116aa2fb0fe5e)
+        ;
+
+        
+    
+    
+            marker_0d2f27b5efb021813949397d568d4722.bindTooltip(
+                `<div>
+                     S-pankki
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0d2f27b5efb021813949397d568d4722.setIcon(icon_724a37496c20ece48f09801da32b4d57);
+            
+    
+            var marker_9869b216f01d4a5a57630aa27186c933 = L.marker(
+                [66.5028364621235, 25.722611282255645],
+                {
+}
+            ).addTo(marker_cluster_ece36f685777b32bcaed76569a52009b);
+        
+    
+            var icon_2eaa76e439b96cfb5a8f36e9492531d8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "money",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_63d8ee3a097c360525f0617879a0c0a9 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_e22e218e5b6c25c00ad8e74949e01a1a = $(`<div id="html_e22e218e5b6c25c00ad8e74949e01a1a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #2d3436; }             </style>             <div style="background:#2d3436; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Nordea Bank</span>             </div>             <div class="pp-row" style="color:#2d3436; font-weight:600;">Local Banking</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Koskikatu 27 A 1 krs, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>0200 3000</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.nordea.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_63d8ee3a097c360525f0617879a0c0a9.setContent(html_e22e218e5b6c25c00ad8e74949e01a1a);
+            
+        
+
+        marker_9869b216f01d4a5a57630aa27186c933.bindPopup(popup_63d8ee3a097c360525f0617879a0c0a9)
+        ;
+
+        
+    
+    
+            marker_9869b216f01d4a5a57630aa27186c933.bindTooltip(
+                `<div>
+                     Nordea Bank
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9869b216f01d4a5a57630aa27186c933.setIcon(icon_2eaa76e439b96cfb5a8f36e9492531d8);
+            
+    
+            var marker_b44bc1d64542b4b71714a7d0edcb0338 = L.marker(
+                [66.50255157467473, 25.73288881506929],
+                {
+}
+            ).addTo(marker_cluster_ece36f685777b32bcaed76569a52009b);
+        
+    
+            var icon_70e14b422887320861d27cb55a122b57 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "money",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_90db316c6e48b1b0e8f23ac5e0f9e237 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_ff46706441b2d64d826765ddc6a9dafb = $(`<div id="html_ff46706441b2d64d826765ddc6a9dafb" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #2d3436; }             </style>             <div style="background:#2d3436; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">OP Bank</span>             </div>             <div class="pp-row" style="color:#2d3436; font-weight:600;">Local Banking</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Koskikatu 12, 96200 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>0100 0500</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.op.fi/osuuspankit/pohjolan-op/konttorit/rovaniemi-koskikatu/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_90db316c6e48b1b0e8f23ac5e0f9e237.setContent(html_ff46706441b2d64d826765ddc6a9dafb);
+            
+        
+
+        marker_b44bc1d64542b4b71714a7d0edcb0338.bindPopup(popup_90db316c6e48b1b0e8f23ac5e0f9e237)
+        ;
+
+        
+    
+    
+            marker_b44bc1d64542b4b71714a7d0edcb0338.bindTooltip(
+                `<div>
+                     OP Bank
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b44bc1d64542b4b71714a7d0edcb0338.setIcon(icon_70e14b422887320861d27cb55a122b57);
+            
+    
+            marker_cluster_ece36f685777b32bcaed76569a52009b.addTo(feature_group_c84e90ade7d3109f028889f5bd364d34);
+        
+    
+            feature_group_c84e90ade7d3109f028889f5bd364d34.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_7fcf14c41dc5bf67d151ab0764fe3422 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_01be932cda20896fd11179ce90460d9d = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_62a058eb081c4ebe2234d4ccf85799af = L.marker(
+                [66.50279433411237, 25.72873796901833],
+                {
+}
+            ).addTo(marker_cluster_01be932cda20896fd11179ce90460d9d);
+        
+    
+            var icon_341de25e348720a770f17917617b5e5e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "bus",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1cdb3a20f45d94c6f04cc090752c4b51 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_0c919d3a7b28f89f26e0a76483b6b686 = $(`<div id="html_0c919d3a7b28f89f26e0a76483b6b686" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #636e72; }             </style>             <div style="background:#636e72; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Bus Services Rovaniemi</span>             </div>             <div class="pp-row" style="color:#636e72; font-weight:600;">Transport</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Koskikatu 19, 96200 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>016 322 6800</div><div class="pp-row"><i class="fa fa-envelope"></i>info.osviitta@rovaniemi.fi</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://linkkari.fi/In-English" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_1cdb3a20f45d94c6f04cc090752c4b51.setContent(html_0c919d3a7b28f89f26e0a76483b6b686);
+            
+        
+
+        marker_62a058eb081c4ebe2234d4ccf85799af.bindPopup(popup_1cdb3a20f45d94c6f04cc090752c4b51)
+        ;
+
+        
+    
+    
+            marker_62a058eb081c4ebe2234d4ccf85799af.bindTooltip(
+                `<div>
+                     Bus Services Rovaniemi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_62a058eb081c4ebe2234d4ccf85799af.setIcon(icon_341de25e348720a770f17917617b5e5e);
+            
+    
+            var marker_c6220943b57d143753818764c171c254 = L.marker(
+                [66.49817738700933, 25.71115023057173],
+                {
+}
+            ).addTo(marker_cluster_01be932cda20896fd11179ce90460d9d);
+        
+    
+            var icon_94e1a6def0df13c504be96b8f7582980 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "train",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_52a8b16a27c9064c1836fe1f3f266914 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_89c597c2780276b3d4e4bb05932557e1 = $(`<div id="html_89c597c2780276b3d4e4bb05932557e1" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #636e72; }             </style>             <div style="background:#636e72; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Railway Station Rovaniemi</span>             </div>             <div class="pp-row" style="color:#636e72; font-weight:600;">Transport</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Ratakatu 3, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.vr.fi/en/railway-stations-and-routes/rovaniemi" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_52a8b16a27c9064c1836fe1f3f266914.setContent(html_89c597c2780276b3d4e4bb05932557e1);
+            
+        
+
+        marker_c6220943b57d143753818764c171c254.bindPopup(popup_52a8b16a27c9064c1836fe1f3f266914)
+        ;
+
+        
+    
+    
+            marker_c6220943b57d143753818764c171c254.bindTooltip(
+                `<div>
+                     Railway Station Rovaniemi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c6220943b57d143753818764c171c254.setIcon(icon_94e1a6def0df13c504be96b8f7582980);
+            
+    
+            var marker_ac1cb340af9d714bab09e826cacc182d = L.marker(
+                [66.55806833735882, 25.827466053678823],
+                {
+}
+            ).addTo(marker_cluster_01be932cda20896fd11179ce90460d9d);
+        
+    
+            var icon_6fedb548f1e930d9edbd797f26f285b7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_67dad2a91c8f96e9164df24cd1f2c74b = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_515ad16bd78c7be04d4c4b46d9286461 = $(`<div id="html_515ad16bd78c7be04d4c4b46d9286461" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #636e72; }             </style>             <div style="background:#636e72; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Rovaniemi Airport</span>             </div>             <div class="pp-row" style="color:#636e72; font-weight:600;">Transport</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Lentokentäntie, 96930 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>020 7086506</div>         </div>         </div>`)[0];
+                popup_67dad2a91c8f96e9164df24cd1f2c74b.setContent(html_515ad16bd78c7be04d4c4b46d9286461);
+            
+        
+
+        marker_ac1cb340af9d714bab09e826cacc182d.bindPopup(popup_67dad2a91c8f96e9164df24cd1f2c74b)
+        ;
+
+        
+    
+    
+            marker_ac1cb340af9d714bab09e826cacc182d.bindTooltip(
+                `<div>
+                     Rovaniemi Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ac1cb340af9d714bab09e826cacc182d.setIcon(icon_6fedb548f1e930d9edbd797f26f285b7);
+            
+    
+            marker_cluster_01be932cda20896fd11179ce90460d9d.addTo(feature_group_7fcf14c41dc5bf67d151ab0764fe3422);
+        
+    
+            feature_group_7fcf14c41dc5bf67d151ab0764fe3422.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_d67b1ee0b802009d8df0171fad97b5b4 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_e5c65217864bb5224ad674e12f1cf6de = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_6a590912e53f5b5cfcf3da7e040b63fd = L.marker(
+                [66.49447133932074, 25.709245326689103],
+                {
+}
+            ).addTo(marker_cluster_e5c65217864bb5224ad674e12f1cf6de);
+        
+    
+            var icon_c3c5bcb14a5cff3b9332f540e12c5b9f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "beige",
+  "iconColor": "white",
+  "icon": "recycle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6991b3b886fd7cb84c177a246394514c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b8cfa61647e40ea249696f95293af3be = $(`<div id="html_b8cfa61647e40ea249696f95293af3be" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #c9a66b; }             </style>             <div style="background:#c9a66b; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Vintikki</span>             </div>             <div class="pp-row" style="color:#c9a66b; font-weight:600;">Second Hand Shops</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Varastotie 2, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>0600 04273</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.vintikki.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_6991b3b886fd7cb84c177a246394514c.setContent(html_b8cfa61647e40ea249696f95293af3be);
+            
+        
+
+        marker_6a590912e53f5b5cfcf3da7e040b63fd.bindPopup(popup_6991b3b886fd7cb84c177a246394514c)
+        ;
+
+        
+    
+    
+            marker_6a590912e53f5b5cfcf3da7e040b63fd.bindTooltip(
+                `<div>
+                     Vintikki
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6a590912e53f5b5cfcf3da7e040b63fd.setIcon(icon_c3c5bcb14a5cff3b9332f540e12c5b9f);
+            
+    
+            var marker_f796deee6bb946f537d89256a43365fe = L.marker(
+                [66.49107119056428, 25.686291024836997],
+                {
+}
+            ).addTo(marker_cluster_e5c65217864bb5224ad674e12f1cf6de);
+        
+    
+            var icon_d36a09b484ecb5a8d3cf71e5d900bb34 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "beige",
+  "iconColor": "white",
+  "icon": "recycle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a5b62661922da9270df66b2bf0b27f27 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_6d1e1d9bd56749d3e33d8c95c971b78a = $(`<div id="html_6d1e1d9bd56749d3e33d8c95c971b78a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #c9a66b; }             </style>             <div style="background:#c9a66b; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Kontti</span>             </div>             <div class="pp-row" style="color:#c9a66b; font-weight:600;">Second Hand Shops</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Teollisuustie 5 7, 96320 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-globe"></i><a href="https://sprkontti.fi/pages/rovaniemen-kontti" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_a5b62661922da9270df66b2bf0b27f27.setContent(html_6d1e1d9bd56749d3e33d8c95c971b78a);
+            
+        
+
+        marker_f796deee6bb946f537d89256a43365fe.bindPopup(popup_a5b62661922da9270df66b2bf0b27f27)
+        ;
+
+        
+    
+    
+            marker_f796deee6bb946f537d89256a43365fe.bindTooltip(
+                `<div>
+                     Kontti
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f796deee6bb946f537d89256a43365fe.setIcon(icon_d36a09b484ecb5a8d3cf71e5d900bb34);
+            
+    
+            marker_cluster_e5c65217864bb5224ad674e12f1cf6de.addTo(feature_group_d67b1ee0b802009d8df0171fad97b5b4);
+        
+    
+            feature_group_d67b1ee0b802009d8df0171fad97b5b4.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var feature_group_af2889e0b0909f0ac53e4e4b8d72fdd6 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_cluster_0c0b583f7f1139da536bafe91b18a6cc = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 16,
+}
+            );
+        
+    
+            var marker_6a9402611e483f9c51282ae22a009813 = L.marker(
+                [66.50089975846736, 25.71815504018208],
+                {
+}
+            ).addTo(marker_cluster_0c0b583f7f1139da536bafe91b18a6cc);
+        
+    
+            var icon_2f5739fc4014bd5ff0d4341ce8800e80 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b56dc766c9554b7350ad1c7fe9ac4081 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_a686128e77286248897b2d30e12d17e7 = $(`<div id="html_a686128e77286248897b2d30e12d17e7" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #1e8449; }             </style>             <div style="background:#1e8449; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Art Museum (Culture House of Korundi)</span>             </div>             <div class="pp-row" style="color:#1e8449; font-weight:600;">Parks & outdoor/leisure</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Lapinkävijäntie 4, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>016 322 2822</div><div class="pp-row"><i class="fa fa-envelope"></i>info@korundi.fi</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://korundi.fi/en/visit/rovaniemi-art-museum" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_b56dc766c9554b7350ad1c7fe9ac4081.setContent(html_a686128e77286248897b2d30e12d17e7);
+            
+        
+
+        marker_6a9402611e483f9c51282ae22a009813.bindPopup(popup_b56dc766c9554b7350ad1c7fe9ac4081)
+        ;
+
+        
+    
+    
+            marker_6a9402611e483f9c51282ae22a009813.bindTooltip(
+                `<div>
+                     Art Museum (Culture House of Korundi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6a9402611e483f9c51282ae22a009813.setIcon(icon_2f5739fc4014bd5ff0d4341ce8800e80);
+            
+    
+            var marker_215bd44680c05f9c6f1a0fe55626d37f = L.marker(
+                [66.50759690198554, 25.726087852441687],
+                {
+}
+            ).addTo(marker_cluster_0c0b583f7f1139da536bafe91b18a6cc);
+        
+    
+            var icon_d5a64a31a48efaa82325e27a95cba27f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0c2da95dc35e908cfa56ef161470fcf5 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_4edc64e50dc10849a58381c142cffee4 = $(`<div id="html_4edc64e50dc10849a58381c142cffee4" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #1e8449; }             </style>             <div style="background:#1e8449; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Arktikum</span>             </div>             <div class="pp-row" style="color:#1e8449; font-weight:600;">Parks & outdoor/leisure</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Pohjoisranta 4, Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>016 322 3260</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://arktikum.fi/en/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_0c2da95dc35e908cfa56ef161470fcf5.setContent(html_4edc64e50dc10849a58381c142cffee4);
+            
+        
+
+        marker_215bd44680c05f9c6f1a0fe55626d37f.bindPopup(popup_0c2da95dc35e908cfa56ef161470fcf5)
+        ;
+
+        
+    
+    
+            marker_215bd44680c05f9c6f1a0fe55626d37f.bindTooltip(
+                `<div>
+                     Arktikum
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_215bd44680c05f9c6f1a0fe55626d37f.setIcon(icon_d5a64a31a48efaa82325e27a95cba27f);
+            
+    
+            var marker_0c74357f6cc2ce2d3c3e4b2f9d3f9d63 = L.marker(
+                [66.5046721612709, 25.71562309785454],
+                {
+}
+            ).addTo(marker_cluster_0c0b583f7f1139da536bafe91b18a6cc);
+        
+    
+            var icon_50ff90e6818772d84bcfb2d79dab8588 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "tint",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8287e80c05e6407e5611ac0ccaffc05d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_55ea569bf5735075bb69775d9dda6aba = $(`<div id="html_55ea569bf5735075bb69775d9dda6aba" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #1e8449; }             </style>             <div style="background:#1e8449; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Indoor swimming hall (even in winter)</span>             </div>             <div class="pp-row" style="color:#1e8449; font-weight:600;">Parks & outdoor/leisure</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Nuortenkatu 11, 96100 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-envelope"></i>uimaopettajat@rovaniemi.fi</div>         </div>         </div>`)[0];
+                popup_8287e80c05e6407e5611ac0ccaffc05d.setContent(html_55ea569bf5735075bb69775d9dda6aba);
+            
+        
+
+        marker_0c74357f6cc2ce2d3c3e4b2f9d3f9d63.bindPopup(popup_8287e80c05e6407e5611ac0ccaffc05d)
+        ;
+
+        
+    
+    
+            marker_0c74357f6cc2ce2d3c3e4b2f9d3f9d63.bindTooltip(
+                `<div>
+                     Indoor swimming hall (even in winter)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0c74357f6cc2ce2d3c3e4b2f9d3f9d63.setIcon(icon_50ff90e6818772d84bcfb2d79dab8588);
+            
+    
+            var marker_58f13254f84a6cc8d971b82e34adccb8 = L.marker(
+                [66.53936174028888, 25.79692686587048],
+                {
+}
+            ).addTo(marker_cluster_0c0b583f7f1139da536bafe91b18a6cc);
+        
+    
+            var icon_29fc759c711f93b0709ce9c460cc9648 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_46f5b21131b7272bea571fe668f8580e = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c041abf4574a3a85cd4ccbdedb781eb6 = $(`<div id="html_c041abf4574a3a85cd4ccbdedb781eb6" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #1e8449; }             </style>             <div style="background:#1e8449; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Santa Park</span>             </div>             <div class="pp-row" style="color:#1e8449; font-weight:600;">Parks & outdoor/leisure</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Tarvantie 1, 96930 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>050 4719229</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://santapark.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_46f5b21131b7272bea571fe668f8580e.setContent(html_c041abf4574a3a85cd4ccbdedb781eb6);
+            
+        
+
+        marker_58f13254f84a6cc8d971b82e34adccb8.bindPopup(popup_46f5b21131b7272bea571fe668f8580e)
+        ;
+
+        
+    
+    
+            marker_58f13254f84a6cc8d971b82e34adccb8.bindTooltip(
+                `<div>
+                     Santa Park
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_58f13254f84a6cc8d971b82e34adccb8.setIcon(icon_29fc759c711f93b0709ce9c460cc9648);
+            
+    
+            var marker_dfd8248045204fedf12b5664819e5d3a = L.marker(
+                [66.54328056323082, 25.844666696776763],
+                {
+}
+            ).addTo(marker_cluster_0c0b583f7f1139da536bafe91b18a6cc);
+        
+    
+            var icon_293105384496b0cc2465ffbb2d28b651 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_de6f50dda63a7ab337c55075f19415d7 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_de47e3d859763949a08f071e670b735a = $(`<div id="html_de47e3d859763949a08f071e670b735a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial, sans-serif; width: 250px;">             <style>                 .pp-row { margin: 3px 0; font-size: 12.5px; color: #333; }                 .pp-row i { width: 18px; color: #1e8449; }             </style>             <div style="background:#1e8449; margin:-9px -9px 8px -9px; padding:8px 12px;                         border-radius: 6px 6px 0 0;">                 <span style="color:white; font-weight:600; font-size:14px;">Santa Claus Village</span>             </div>             <div class="pp-row" style="color:#1e8449; font-weight:600;">Parks & outdoor/leisure</div>             <div class="pp-row"><i class="fa fa-map-marker"></i>Tähtikuja 2, 96930 Rovaniemi</div>             <div class="pp-row"><i class="fa fa-phone"></i>400306273</div><div class="pp-row"><i class="fa fa-envelope"></i>info@schv.fi</div><div class="pp-row"><i class="fa fa-globe"></i><a href="https://www.santaclausholidayvillage.fi/" target="_blank">Visit website</a></div>         </div>         </div>`)[0];
+                popup_de6f50dda63a7ab337c55075f19415d7.setContent(html_de47e3d859763949a08f071e670b735a);
+            
+        
+
+        marker_dfd8248045204fedf12b5664819e5d3a.bindPopup(popup_de6f50dda63a7ab337c55075f19415d7)
+        ;
+
+        
+    
+    
+            marker_dfd8248045204fedf12b5664819e5d3a.bindTooltip(
+                `<div>
+                     Santa Claus Village
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_dfd8248045204fedf12b5664819e5d3a.setIcon(icon_293105384496b0cc2465ffbb2d28b651);
+            
+    
+            marker_cluster_0c0b583f7f1139da536bafe91b18a6cc.addTo(feature_group_af2889e0b0909f0ac53e4e4b8d72fdd6);
+        
+    
+            feature_group_af2889e0b0909f0ac53e4e4b8d72fdd6.addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+        function geo_json_5a6e7777575dc17841bd98aabd292622_pointToLayer(feature, latlng) {
+            var opts = {
+  "stroke": true,
+  "color": "#3388ff",
+  "weight": 3,
+  "opacity": 0,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "#3388ff",
+  "fillOpacity": 0,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+};
+            
+            return new L.CircleMarker(latlng, opts)
+        }
+
+        function geo_json_5a6e7777575dc17841bd98aabd292622_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_5a6e7777575dc17841bd98aabd292622 = L.geoJson(null, {
+                onEachFeature: geo_json_5a6e7777575dc17841bd98aabd292622_onEachFeature,
+            
+                pointToLayer: geo_json_5a6e7777575dc17841bd98aabd292622_pointToLayer,
+            ...{
+}
+        });
+
+        function geo_json_5a6e7777575dc17841bd98aabd292622_add (data) {
+            geo_json_5a6e7777575dc17841bd98aabd292622
+                .addData(data);
+        }
+            geo_json_5a6e7777575dc17841bd98aabd292622_add({"features": [{"geometry": {"coordinates": [25.727474766459025, 66.4968961871329], "type": "Point"}, "properties": {"name": "DVV (Digital and Population Data Services Agency) \u2014 Government \u0026 legal registration"}, "type": "Feature"}, {"geometry": {"coordinates": [25.728612729175875, 66.4967227599788], "type": "Point"}, "properties": {"name": "Poliisi (Lapland Police Department, Rovaniemi station) \u2014 Government \u0026 legal registration"}, "type": "Feature"}, {"geometry": {"coordinates": [25.734923800872213, 66.50084108654617], "type": "Point"}, "properties": {"name": "TE-toimisto (Employment Office) \u2014 Government \u0026 legal registration"}, "type": "Feature"}, {"geometry": {"coordinates": [25.73232852181392, 66.49991009984741], "type": "Point"}, "properties": {"name": "Migri (Finnish Immigration Service Point) \u2014 Government \u0026 legal registration"}, "type": "Feature"}, {"geometry": {"coordinates": [25.727445279607096, 66.49691102155485], "type": "Point"}, "properties": {"name": "Vero (Finnish Tax Administration) \u2014 Government \u0026 legal registration"}, "type": "Feature"}, {"geometry": {"coordinates": [25.720595282605377, 66.49791761524021], "type": "Point"}, "properties": {"name": "Kela (Social Insurance Institution) \u2014 Government \u0026 legal registration"}, "type": "Feature"}, {"geometry": {"coordinates": [25.72873796901833, 66.50279433411237], "type": "Point"}, "properties": {"name": "Pre-School (City of Rovaniemi) \u2014 Education \u0026 family"}, "type": "Feature"}, {"geometry": {"coordinates": [25.72873796901833, 66.50279433411237], "type": "Point"}, "properties": {"name": "Basic Education (City of Rovaniemi) \u2014 Education \u0026 family"}, "type": "Feature"}, {"geometry": {"coordinates": [25.72873796901833, 66.50279433411237], "type": "Point"}, "properties": {"name": "Secondary Education (City of Rovaniemi) \u2014 Education \u0026 family"}, "type": "Feature"}, {"geometry": {"coordinates": [25.714947153258844, 66.48538573331643], "type": "Point"}, "properties": {"name": "Higher Education (University of Lapland) \u2014 Education \u0026 family"}, "type": "Feature"}, {"geometry": {"coordinates": [25.722012423220967, 66.4816859527522], "type": "Point"}, "properties": {"name": "Higher Education (Lapland University of Applied Sciences) \u2014 Education \u0026 family"}, "type": "Feature"}, {"geometry": {"coordinates": [25.734943455526302, 66.50085855853807], "type": "Point"}, "properties": {"name": "International House Rovaniemi (settling in, job search, general advice) \u2014 Education \u0026 family"}, "type": "Feature"}, {"geometry": {"coordinates": [25.722549491288152, 66.49663456540142], "type": "Point"}, "properties": {"name": "Rovaniemi City Library \u2014 Education \u0026 family"}, "type": "Feature"}, {"geometry": {"coordinates": [25.773972333627828, 66.49227180482116], "type": "Point"}, "properties": {"name": "Lapland Central Hospital \u2014 Health \u0026 dental"}, "type": "Feature"}, {"geometry": {"coordinates": [25.71268940131137, 66.48538193246647], "type": "Point"}, "properties": {"name": "FSHS Rovaniemi (Student health services) \u2014 Health \u0026 dental"}, "type": "Feature"}, {"geometry": {"coordinates": [25.707030511345664, 66.49708669400349], "type": "Point"}, "properties": {"name": "Mehil\u00e4inen Rovaniemi (Registration not required in Rovaniemi) \u2014 Health \u0026 dental"}, "type": "Feature"}, {"geometry": {"coordinates": [25.72928038818085, 66.50228420016974], "type": "Point"}, "properties": {"name": "ORAL (Dental care) \u2014 Health \u0026 dental"}, "type": "Feature"}, {"geometry": {"coordinates": [25.6880249930676, 66.49251669884225], "type": "Point"}, "properties": {"name": "Local pharmacy (Pharmacy in Rovaniemi Prisma) \u2014 Pharmacy"}, "type": "Feature"}, {"geometry": {"coordinates": [25.7149498026079, 66.50235932127981], "type": "Point"}, "properties": {"name": "Local pharmacy (Kairatie  Pharmacy) \u2014 Pharmacy"}, "type": "Feature"}, {"geometry": {"coordinates": [25.754153667918104, 66.49788810692718], "type": "Point"}, "properties": {"name": "Local pharmacy (Ounas Pharmacy) \u2014 Pharmacy"}, "type": "Feature"}, {"geometry": {"coordinates": [25.6880249930676, 66.49251669884225], "type": "Point"}, "properties": {"name": "Prisma Rovaniemi \u2014 Supermarkets"}, "type": "Feature"}, {"geometry": {"coordinates": [25.69460447806653, 66.49170991803786], "type": "Point"}, "properties": {"name": "Lidl Rovaniemi \u2014 Supermarkets"}, "type": "Feature"}, {"geometry": {"coordinates": [25.707243297853783, 66.49611754546383], "type": "Point"}, "properties": {"name": "Minimani Rovaniemi \u2014 Supermarkets"}, "type": "Feature"}, {"geometry": {"coordinates": [25.78293977238624, 66.51596287652934], "type": "Point"}, "properties": {"name": "S-market Saarenkyl\u00e4 \u2014 Supermarkets"}, "type": "Feature"}, {"geometry": {"coordinates": [25.71502669694362, 66.50087521024187], "type": "Point"}, "properties": {"name": "K-Supermarket Kauppatori \u2014 Supermarkets"}, "type": "Feature"}, {"geometry": {"coordinates": [25.753930087536247, 66.51847450779871], "type": "Point"}, "properties": {"name": "K-Citymarket Rovaniemi \u2014 Supermarkets"}, "type": "Feature"}, {"geometry": {"coordinates": [25.72928038818085, 66.50228420016974], "type": "Point"}, "properties": {"name": "Sampokeskus Shopping Centre \u2014 Shopping Centres"}, "type": "Feature"}, {"geometry": {"coordinates": [25.72305800243377, 66.50307176565191], "type": "Point"}, "properties": {"name": "Shopping Centre Revontuli \u2014 Shopping Centres"}, "type": "Feature"}, {"geometry": {"coordinates": [25.684252429591357, 66.49110758703023], "type": "Point"}, "properties": {"name": "Gigantti Rovaniemi (Electronics \u0026 consumers) \u2014 Electronics"}, "type": "Feature"}, {"geometry": {"coordinates": [25.69255802985392, 66.49328215010058], "type": "Point"}, "properties": {"name": "Power Rovaniemi (Electronics \u0026 consumers) \u2014 Electronics"}, "type": "Feature"}, {"geometry": {"coordinates": [25.68978951134537, 66.49365440853829], "type": "Point"}, "properties": {"name": "Euronics Rovaniemi (Electronics \u0026 consumers) \u2014 Electronics"}, "type": "Feature"}, {"geometry": {"coordinates": [25.7114466777551, 66.49557123535102], "type": "Point"}, "properties": {"name": "McDonald\u0027s Rovaniemi Lampela \u2014 Fast-Food"}, "type": "Feature"}, {"geometry": {"coordinates": [25.730031416378697, 66.50210023615908], "type": "Point"}, "properties": {"name": "Subway \u2014 Fast-Food"}, "type": "Feature"}, {"geometry": {"coordinates": [25.70744685957396, 66.49621142420189], "type": "Point"}, "properties": {"name": "Subway \u2014 Fast-Food"}, "type": "Feature"}, {"geometry": {"coordinates": [25.689013670946544, 66.49245046588537], "type": "Point"}, "properties": {"name": "S-pankki \u2014 Local Banking"}, "type": "Feature"}, {"geometry": {"coordinates": [25.722611282255645, 66.5028364621235], "type": "Point"}, "properties": {"name": "Nordea Bank \u2014 Local Banking"}, "type": "Feature"}, {"geometry": {"coordinates": [25.73288881506929, 66.50255157467473], "type": "Point"}, "properties": {"name": "OP Bank \u2014 Local Banking"}, "type": "Feature"}, {"geometry": {"coordinates": [25.72873796901833, 66.50279433411237], "type": "Point"}, "properties": {"name": "Bus Services Rovaniemi \u2014 Transport"}, "type": "Feature"}, {"geometry": {"coordinates": [25.71115023057173, 66.49817738700933], "type": "Point"}, "properties": {"name": "Railway Station Rovaniemi \u2014 Transport"}, "type": "Feature"}, {"geometry": {"coordinates": [25.827466053678823, 66.55806833735882], "type": "Point"}, "properties": {"name": "Rovaniemi Airport \u2014 Transport"}, "type": "Feature"}, {"geometry": {"coordinates": [25.709245326689103, 66.49447133932074], "type": "Point"}, "properties": {"name": "Vintikki \u2014 Second Hand Shops"}, "type": "Feature"}, {"geometry": {"coordinates": [25.686291024836997, 66.49107119056428], "type": "Point"}, "properties": {"name": "Kontti \u2014 Second Hand Shops"}, "type": "Feature"}, {"geometry": {"coordinates": [25.71815504018208, 66.50089975846736], "type": "Point"}, "properties": {"name": "Art Museum (Culture House of Korundi) \u2014 Parks \u0026 outdoor/leisure"}, "type": "Feature"}, {"geometry": {"coordinates": [25.726087852441687, 66.50759690198554], "type": "Point"}, "properties": {"name": "Arktikum \u2014 Parks \u0026 outdoor/leisure"}, "type": "Feature"}, {"geometry": {"coordinates": [25.71562309785454, 66.5046721612709], "type": "Point"}, "properties": {"name": "Indoor swimming hall (even in winter) \u2014 Parks \u0026 outdoor/leisure"}, "type": "Feature"}, {"geometry": {"coordinates": [25.79692686587048, 66.53936174028888], "type": "Point"}, "properties": {"name": "Santa Park \u2014 Parks \u0026 outdoor/leisure"}, "type": "Feature"}, {"geometry": {"coordinates": [25.844666696776763, 66.54328056323082], "type": "Point"}, "properties": {"name": "Santa Claus Village \u2014 Parks \u0026 outdoor/leisure"}, "type": "Feature"}], "type": "FeatureCollection"});
+        geo_json_5a6e7777575dc17841bd98aabd292622.setStyle(function(feature) {return feature.properties.style;});
+
+        
+    
+            var geo_json_5a6e7777575dc17841bd98aabd292622searchControl = new L.Control.Search({
+                layer: geo_json_5a6e7777575dc17841bd98aabd292622,
+                
+                propertyName: 'name',
+                
+                collapsed: false,
+                textPlaceholder: '🔍  Search a location...',
+                position:'topright',
+            
+                initial: false,
+                
+                hideMarkerOnCollapse: true
+            
+                });
+                geo_json_5a6e7777575dc17841bd98aabd292622searchControl.on('search:locationfound', function(e) {
+                    geo_json_5a6e7777575dc17841bd98aabd292622.setStyle(function(feature){
+                        return feature.properties.style
+                    })
+                    
+                    if(e.layer._popup)
+                        e.layer.openPopup();
+                })
+                geo_json_5a6e7777575dc17841bd98aabd292622searchControl.on('search:collapsed', function(e) {
+                        geo_json_5a6e7777575dc17841bd98aabd292622.setStyle(function(feature){
+                            return feature.properties.style
+                    });
+                });
+            map_22212881d0e071631211648bf938c64f.addControl( geo_json_5a6e7777575dc17841bd98aabd292622searchControl );
+
+        
+    
+            var layer_control_0a48b470918835495db8a30859ebc9fd_layers = {
+                base_layers : {
+                    "Standard Map" : tile_layer_26377dd47b8bbd8a644327e631f38fdd,
+                    "3D Terrain View" : tile_layer_d3aa36777cdd55bac938951eeafdecb3,
+                },
+                overlays :  {
+                    "Government \u0026 legal registration (6)" : feature_group_d3dd933ee2f2bd357729e045d14934bd,
+                    "Education \u0026 family (7)" : feature_group_ff1d31ffc588655ca86ef9a13a66e598,
+                    "Health \u0026 dental (4)" : feature_group_675a9358fe94258eea32231744377c2e,
+                    "Pharmacy (3)" : feature_group_6d28fbae08de73cb1c1cf38d279dd6d5,
+                    "Supermarkets (6)" : feature_group_0858ada782cbce46db3eebc4a2480eb9,
+                    "Shopping Centres (2)" : feature_group_bbef07e8f3ae44eae20c9a288f3072cb,
+                    "Electronics (3)" : feature_group_79ae93d84db93487353b93fd21357b35,
+                    "Fast-Food (3)" : feature_group_ecdb60466d24d08c92ec1cbe5a011bbf,
+                    "Local Banking (3)" : feature_group_c84e90ade7d3109f028889f5bd364d34,
+                    "Transport (3)" : feature_group_7fcf14c41dc5bf67d151ab0764fe3422,
+                    "Second Hand Shops (2)" : feature_group_d67b1ee0b802009d8df0171fad97b5b4,
+                    "Parks \u0026 outdoor/leisure (5)" : feature_group_af2889e0b0909f0ac53e4e4b8d72fdd6,
+                },
+            };
+            let layer_control_0a48b470918835495db8a30859ebc9fd = L.control.layers(
+                layer_control_0a48b470918835495db8a30859ebc9fd_layers.base_layers,
+                layer_control_0a48b470918835495db8a30859ebc9fd_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_22212881d0e071631211648bf938c64f);
+
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "Full Screen",
+  "titleCancel": "Exit Full Screen",
+  "forceSeparateButton": false,
+}
+            ).addTo(map_22212881d0e071631211648bf938c64f);
+        
+    
+            var tile_layer_5aef7efbaf031384eea1b3453971492a = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detect_retina": false, "max_native_zoom": 19, "max_zoom": 19, "min_zoom": 0, "no_wrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+            var mini_map_997edbbeb750023ff67d93d3d8eec4a8 = new L.Control.MiniMap(
+                tile_layer_5aef7efbaf031384eea1b3453971492a,
+                {
+  "position": "bottomright",
+  "width": 150,
+  "height": 150,
+  "collapsedWidth": 25,
+  "collapsedHeight": 25,
+  "zoomLevelOffset": -6,
+  "centerFixed": false,
+  "zoomAnimation": false,
+  "toggleDisplay": true,
+  "autoToggleDisplay": false,
+  "minimized": false,
+}
+            );
+            map_22212881d0e071631211648bf938c64f.addControl(mini_map_997edbbeb750023ff67d93d3d8eec4a8);
+        
+    
+            var measure_control_2ae1ee4eeb34718792232ce17dd35204 = new L.Control.Measure(
+                {
+  "position": "topleft",
+  "primaryLengthUnit": "kilometers",
+  "secondaryLengthUnit": "miles",
+  "primaryAreaUnit": "sqmeters",
+  "secondaryAreaUnit": "acres",
+});
+            map_22212881d0e071631211648bf938c64f.addControl(measure_control_2ae1ee4eeb34718792232ce17dd35204);
+
+            // Workaround for using this plugin with Leaflet>=1.8.0
+            // https://github.com/ljagis/leaflet-measure/issues/171
+            L.Control.Measure.include({
+                _setCaptureMarkerIcon: function () {
+                    // disable autopan
+                    this._captureMarker.options.autoPanOnFocus = false;
+                    // default function
+                    this._captureMarker.setIcon(
+                        L.divIcon({
+                            iconSize: this._map.getSize().multiplyBy(2)
+                        })
+                    );
+                },
+            });
+
+        
+    
+            var locate_control_f6818985b4e085a9536c1e05f0468963 = L.control.locate(
+                {"position": "topleft"}
+            ).addTo(map_22212881d0e071631211648bf938c64f);
+
+
+</script>
+
+<!-- PWA: register service worker for offline support -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('sw.js').catch(function (err) {
+                console.warn('Service worker registration failed:', err);
+            });
+        });
+    }
+</script>
+</html>
