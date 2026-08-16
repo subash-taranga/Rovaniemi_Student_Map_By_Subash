@@ -76,41 +76,23 @@
 <body>
     
     
-    <style>
-        @media (max-width: 480px) {
-            #title-banner { padding: 5px 14px !important; top: 6px !important; max-width: 90vw !important; }
-            #title-banner .tb-title { font-size: 13.5px !important; gap: 5px !important; }
-            #title-banner .tb-title img { height: 16px !important; width: 16px !important; }
-        }
-    </style>
-    <div id="title-banner" onclick="
-            var s=document.getElementById('title-subtitle');
-            var a=document.getElementById('title-arrow');
-            var open = s.style.display !== 'none';
-            s.style.display = open ? 'none' : 'block';
-            a.style.transform = open ? 'rotate(-90deg)' : 'rotate(0deg)';
-        " style="
-        position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+    <div style="
+        position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
         z-index: 9999;
         background: linear-gradient(135deg, #154360, #2e86c1);
         color: white;
-        padding: 6px 18px;
-        border-radius: 10px;
+        padding: 10px 26px;
+        border-radius: 12px;
         box-shadow: 0 4px 14px rgba(0,0,0,0.35);
         font-family: 'Segoe UI', Arial, sans-serif;
-        text-align: center;
-        cursor: pointer;
-        user-select: none;
-        max-width: 92vw;">
-        <div class="tb-title" style="font-size: 15px; font-weight: 700; letter-spacing: 0.3px;
-                    display: flex; align-items: center; justify-content: center; gap: 6px;
-                    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        text-align: center;">
+        <div style="font-size: 19px; font-weight: 700; letter-spacing: 0.3px;
+                    display: flex; align-items: center; justify-content: center; gap: 8px;">
             ❄️ Rovaniemi Essentials Map
             <img src="data:image/png;base64,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"
-                 style="height: 18px; width: 18px; border-radius: 5px; vertical-align: middle;" />
-            <span id="title-arrow" style="font-size: 11px; opacity: 0.85; transition: transform 0.2s ease; transform: rotate(-90deg);">▾</span>
+                 style="height: 24px; width: 24px; border-radius: 6px; vertical-align: middle;" />
         </div>
-        <div id="title-subtitle" style="display:none; font-size: 10.5px; font-weight: 400; opacity: 0.9; margin-top: 3px;">
+        <div style="font-size: 12px; font-weight: 400; opacity: 0.9; margin-top: 2px;">
             FOR INTERNATIONAL STUDENTS LAPIN AMK 2026-2027
         </div>
     </div>
