@@ -3,7 +3,7 @@
 // map tiles / CDN assets as they're fetched so previously-viewed areas
 // keep working without internet.
 
-const APP_CACHE = "rovaniemi-app-v1";
+const APP_CACHE = "rovaniemi-app-v2";
 const TILE_CACHE = "rovaniemi-tiles-v1";
 
 const APP_SHELL = [
