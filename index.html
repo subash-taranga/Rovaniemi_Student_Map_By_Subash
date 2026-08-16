@@ -98,20 +98,30 @@
     </div>
     
     
-    <div style="
+    <div id="legend-box" style="
         position: fixed; bottom: 24px; left: 16px; z-index: 9999;
         background: rgba(255,255,255,0.95);
         backdrop-filter: blur(4px);
-        padding: 14px 16px;
+        padding: 10px 14px;
         border-radius: 12px;
         box-shadow: 0 4px 14px rgba(0,0,0,0.3);
         font-family: 'Segoe UI', Arial, sans-serif;
-        max-height: 340px; overflow-y: auto; width: 235px;">
-        <div style="font-size:13px; font-weight:700; color:#154360; margin-bottom:8px;
-                     border-bottom: 2px solid #eee; padding-bottom: 6px;">
-            📍 Map Legend
+        width: 200px;
+        max-width: 60vw;">
+        <div id="legend-toggle" onclick="
+            var r=document.getElementById('legend-rows');
+            var a=document.getElementById('legend-arrow');
+            var open = r.style.display !== 'none';
+            r.style.display = open ? 'none' : 'block';
+            a.style.transform = open ? 'rotate(-90deg)' : 'rotate(0deg)';
+        " style="font-size:13px; font-weight:700; color:#154360;
+                     display:flex; align-items:center; justify-content:space-between;
+                     cursor:pointer; user-select:none;">
+            <span>📍 Map Legend</span>
+            <span id="legend-arrow" style="transition: transform 0.2s ease; transform: rotate(-90deg);">▾</span>
         </div>
-        
+        <div id="legend-rows" style="display:none; max-height:300px; overflow-y:auto;
+                     margin-top:8px; border-top: 2px solid #eee; padding-top: 6px;">
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#154360; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -121,7 +131,7 @@
             <span style="font-size:12.5px; color:#222;">Government & legal registration</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">6</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#00b894; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -131,7 +141,7 @@
             <span style="font-size:12.5px; color:#222;">Education & family</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">7</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#d63031; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -141,7 +151,7 @@
             <span style="font-size:12.5px; color:#222;">Health & dental</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">4</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#e84393; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -151,7 +161,7 @@
             <span style="font-size:12.5px; color:#222;">Pharmacy</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#6c5ce7; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -161,7 +171,7 @@
             <span style="font-size:12.5px; color:#222;">Supermarkets</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">6</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#4a235a; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -171,7 +181,7 @@
             <span style="font-size:12.5px; color:#222;">Shopping Centres</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">2</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#5f9ea0; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -181,7 +191,7 @@
             <span style="font-size:12.5px; color:#222;">Electronics</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#e67e22; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -191,7 +201,7 @@
             <span style="font-size:12.5px; color:#222;">Fast-Food</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#2d3436; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -201,7 +211,7 @@
             <span style="font-size:12.5px; color:#222;">Local Banking</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#636e72; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -211,7 +221,7 @@
             <span style="font-size:12.5px; color:#222;">Transport</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">3</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#c9a66b; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -221,7 +231,7 @@
             <span style="font-size:12.5px; color:#222;">Second Hand Shops</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">2</span>
         </div>
-        
+
         <div style="display:flex; align-items:center; margin:4px 0;">
             <span style="background:#1e8449; width:16px; height:16px; border-radius:50%;
                          display:inline-flex; align-items:center; justify-content:center;
@@ -231,7 +241,7 @@
             <span style="font-size:12.5px; color:#222;">Parks & outdoor/leisure</span>
             <span style="font-size:11px; color:#888; margin-left:auto; padding-left:10px;">5</span>
         </div>
-        
+        </div>
     </div>
     
     
@@ -2903,7 +2913,7 @@
                 layer_control_0a48b470918835495db8a30859ebc9fd_layers.overlays,
                 {
   "position": "topright",
-  "collapsed": false,
+  "collapsed": true,
   "autoZIndex": true,
 }
             ).addTo(map_22212881d0e071631211648bf938c64f);
