@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/31109919/README.md)
+[README.md](https://github.com/user-attachments/files/31184341/README.md)
 # Rovaniemi Essentials Map — PWA
 
 This folder is a ready-to-deploy Progressive Web App (PWA) version of your
